@@ -2,7 +2,7 @@
 /* 1. 页面骨架 ------------------------------------------------------------ */
 .content-page { min-height: 75vh; padding: 150px max(24px, calc((100vw - 1120px)/2)) 100px }
 .page-heading { margin-bottom: 38px; text-align: center }
-.page-heading > p { margin: 0 0 8px; color: var(--pink-dark); font: 700 10px Arial, sans-serif; letter-spacing: .2em }
+.page-heading > p { margin: 0 0 8px; color: var(--accent-deep); font: 700 10px Arial, sans-serif; letter-spacing: .2em }
 .page-heading h1 { margin: 12px 0; font: 400 clamp(38px, 6vw, 62px)/1.1 var(--serif); letter-spacing: -.04em }
 .page-heading > span { display: block; color: var(--muted); font-size: 13px }
 
@@ -20,8 +20,8 @@
     gap: 6px;
     padding: 7px 14px;
     border-radius: 99px;
-    background: var(--pink-softer);
-    color: var(--pink-dark);
+    background: var(--accent-softer);
+    color: var(--accent-deep);
     font-size: 11px;
 }
 
@@ -63,7 +63,7 @@
 
 /* 1.1 使用说明 ------------------------------------------------------------ */
 .shop-link.is-help { background: var(--surface); border: 1px solid var(--line-strong); color: var(--ink); cursor: pointer }
-.shop-link.is-help:hover { border-color: var(--pink); color: var(--pink-dark) }
+.shop-link.is-help:hover { border-color: var(--accent); color: var(--accent-deep) }
 :root:not(.has-js) .shop-link.is-help { display: none }
 
 .shop-help {
@@ -80,15 +80,15 @@
 :root.has-js .shop-dialog .shop-help { display: block; margin: 0; padding: 0; border: 0; background: none; max-width: none }
 
 .shop-help h2 { display: flex; align-items: center; gap: 8px; font: 400 20px var(--serif); margin-bottom: 18px }
-.shop-help h2 .icon { color: var(--pink-dark) }
+.shop-help h2 .icon { color: var(--accent-deep) }
 .shop-help ol { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none }
 .shop-help li { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: baseline; gap: 12px }
 
 .shop-help li > b {
     padding: 3px 10px;
     border-radius: 999px;
-    background: var(--pink-soft);
-    color: var(--pink-dark);
+    background: var(--accent-soft);
+    color: var(--accent-deep);
     font: 700 10px Arial;
     letter-spacing: .06em;
     white-space: nowrap;
@@ -124,8 +124,8 @@
     transition: background-color .2s, color .2s;
 }
 
-.shop-filter a:hover { color: var(--pink-dark) }
-.shop-filter a.is-active { background: var(--pink-soft); color: var(--pink-dark) }
+.shop-filter a:hover { color: var(--accent-deep) }
+.shop-filter a.is-active { background: var(--accent-soft); color: var(--accent-deep) }
 
 /* 3. 货架 ---------------------------------------------------------------- */
 .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(266px, 1fr)); gap: 20px }
@@ -161,7 +161,7 @@
     object-fit: cover;
     object-position: center center;
 }
-.shop-cover-icon { color: var(--pink-dark); font-size: 38px; opacity: .72 }
+.shop-cover-icon { color: var(--accent-deep); font-size: 38px; opacity: .72 }
 
 .shop-cover.tone-peach { background: var(--card-peach) }
 .shop-cover.tone-mint { background: var(--card-mint) }
@@ -188,7 +188,7 @@
 .shop-status { left: 12px }
 .shop-private { right: 12px }
 
-.shop-status.is-listed { background: var(--pink-soft); color: var(--pink-dark) }
+.shop-status.is-listed { background: var(--accent-soft); color: var(--accent-deep) }
 .shop-status.is-redeemed { background: var(--card-mint); color: var(--ink) }
 .shop-status.is-pending { background: var(--card-gold); color: var(--ink) }
 .shop-status.is-used { background: var(--ink); color: var(--paper) }
@@ -253,7 +253,7 @@
     padding: 0;
     border: 0;
     background: none;
-    color: var(--pink-dark);
+    color: var(--accent-deep);
     font-size: 11px;
     line-height: 1.85;
     cursor: pointer;
@@ -286,7 +286,7 @@
 }
 
 .shop-price { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 11px }
-.shop-price strong { color: var(--pink-dark); font: 400 21px var(--serif) }
+.shop-price strong { color: var(--accent-deep); font: 400 21px var(--serif) }
 
 .shop-buy {
     display: inline-flex;
@@ -301,7 +301,7 @@
     transition: background-color .2s;
 }
 
-.shop-buy:hover { background: var(--pink-dark) }
+.shop-buy:hover { background: var(--accent-deep) }
 
 /* 换不了的时候按钮位置换成一句说明，别留个点不动的按钮让人猜 */
 .shop-buy.is-off { background: var(--surface-muted); color: var(--faint); cursor: default }
@@ -319,7 +319,7 @@
     transition: border-color .2s, color .2s;
 }
 
-.shop-ghost:hover { border-color: var(--pink); color: var(--pink-dark) }
+.shop-ghost:hover { border-color: var(--accent); color: var(--accent-deep) }
 
 /* 4. 仓库 ---------------------------------------------------------------- */
 .shop-section { max-width: 880px; margin: 0 auto 46px }
@@ -334,7 +334,7 @@
     border-bottom: 1px solid var(--line);
 }
 
-.shop-section-head p { font: 700 8px Arial; letter-spacing: .25em; color: var(--pink-dark); margin-bottom: 7px }
+.shop-section-head p { font: 700 8px Arial; letter-spacing: .25em; color: var(--accent-deep); margin-bottom: 7px }
 .shop-section-head h2 { font: 400 24px var(--serif) }
 .shop-section-head > span { color: var(--faint); font-size: 11px }
 
@@ -351,7 +351,7 @@
     background: var(--surface);
 }
 
-.shop-row.is-pending { border-color: var(--pink); background: var(--pink-softer) }
+.shop-row.is-pending { border-color: var(--accent); background: var(--accent-softer) }
 .shop-row.is-done { opacity: .6 }
 
 .shop-row-mark {
@@ -361,11 +361,11 @@
     height: 44px;
     border-radius: 14px;
     background: var(--surface-muted);
-    color: var(--pink-dark);
+    color: var(--accent-deep);
     font-size: 19px;
 }
 
-.shop-row.is-pending .shop-row-mark { background: var(--surface); color: var(--pink-dark) }
+.shop-row.is-pending .shop-row-mark { background: var(--surface); color: var(--accent-deep) }
 .shop-row-body { min-width: 0 }
 .shop-row-title { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; margin-bottom: 6px }
 .shop-row-title strong { font: 400 17px var(--serif) }
@@ -376,7 +376,7 @@
 .shop-card.is-focused, .shop-row.is-focused { animation: wish-flash 2.6s ease-out }
 
 @keyframes wish-flash {
-    0%, 35% { box-shadow: 0 0 0 3px var(--pink) }
+    0%, 35% { box-shadow: 0 0 0 3px var(--accent) }
     100% { box-shadow: 0 0 0 3px transparent }
 }
 
@@ -405,18 +405,18 @@
     font-size: 16px;
 }
 
-.ledger-item.is-spend .ledger-mark { background: var(--pink-soft); color: var(--pink-dark) }
+.ledger-item.is-spend .ledger-mark { background: var(--accent-soft); color: var(--accent-deep) }
 .ledger-body { min-width: 0 }
 .ledger-body > strong { display: block; overflow: hidden; font-size: 13px; font-weight: 400; text-overflow: ellipsis; white-space: nowrap }
 .ledger-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 10px; margin-top: 4px; color: var(--faint); font-size: 10px }
 .ledger-meta em { font-style: normal }
 .ledger-backfill { padding: 2px 8px; border-radius: 99px; background: var(--surface-muted); color: var(--muted) }
 .ledger-amount { color: var(--ink); font: 400 17px var(--serif) }
-.ledger-item.is-spend .ledger-amount { color: var(--pink-dark) }
+.ledger-item.is-spend .ledger-amount { color: var(--accent-deep) }
 
 /* 6. 空状态与翻页 -------------------------------------------------------- */
 .shop-empty { padding: 70px 20px; text-align: center; color: var(--muted) }
-.shop-empty > .icon { color: var(--pink-dark); font-size: 40px }
+.shop-empty > .icon { color: var(--accent-deep); font-size: 40px }
 .shop-empty h2 { margin-top: 16px; color: var(--ink); font: 400 24px var(--serif) }
 .shop-empty p { margin-top: 7px; font-size: 12px }
 .shop-empty.is-inline { padding: 44px 20px; border: 1px dashed var(--line-strong); border-radius: 18px }
@@ -459,8 +459,8 @@
     height: 54px;
     margin: 0 auto 16px;
     border-radius: 18px;
-    background: var(--pink-soft);
-    color: var(--pink-dark);
+    background: var(--accent-soft);
+    color: var(--accent-deep);
     font-size: 24px;
 }
 

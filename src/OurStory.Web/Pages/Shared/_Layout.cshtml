@@ -4,22 +4,28 @@
 @{
     var site = await SettingsService.GetAsync();
     var activeNav = ViewData["ActiveNav"] as string ?? string.Empty;
+    var logoMark = string.IsNullOrEmpty(site.SiteTitle) ? "♡" : site.SiteTitle.Substring(0, 1);
+    var logoText = site.SiteTitle is { Length: > 1 } ? site.SiteTitle.Substring(1) : string.Empty;
 
-    var bundle = ViewData["Bundle"] as string ?? "moments";
-    var styles = new[] {
+    var bundle = ViewData["Bundle"] as string;
+    var styles = new List<string> {
         "assets/variables.css",
         "assets/core.css",
         "assets/calendar.css",
         "assets/datefield.css",
         "assets/lightbox.css",
-        "assets/pagination.css",
-        $"assets/{bundle}.css"
+        "assets/pagination.css"
     };
+    if (!string.IsNullOrEmpty(bundle)) {
+        styles.Add($"assets/{bundle}.css");
+    }
 
-    var scripts = new[] {
-        "assets/core.js",
-        $"assets/{bundle}.js"
+    var scripts = new List<string> {
+        "assets/core.js"
     };
+    if (!string.IsNullOrEmpty(bundle)) {
+        scripts.Add($"assets/{bundle}.js");
+    }
 
     var pageTitle = ViewData["Title"] as string;
 }
@@ -31,12 +37,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta name="theme-color"
-          content="#fffaf8"
+          content="#f7f4f0"
           media="(prefers-color-scheme: light)"
           data-theme-color="light">
 
     <meta name="theme-color"
-          content="#17151b"
+          content="#161514"
           media="(prefers-color-scheme: dark)"
           data-theme-color="dark">
 
@@ -96,7 +102,7 @@
 <a class="skip-link" href="#main">跳到主要内容</a>
 <header class="site-nav" id="site-nav">
     <div class="nav-inner">
-        <a class="logo" href="/" aria-label="回到首页"><span>CC</span> Our Story</a>
+        <a class="logo" href="/" aria-label="回到首页"><span>@logoMark</span>@logoText</a>
         <nav aria-label="站内导航">
             <a href="/"@(activeNav == "home" ? Html.Raw(" class=\"active\" aria-current=\"page\"") : null)>@Icon("house")<span>首页</span></a>
             <a href="/moments"@(activeNav == "moments" ? Html.Raw(" class=\"active\" aria-current=\"page\"") : null)>@Icon("camera")<span>点点滴滴</span></a>
@@ -115,9 +121,9 @@
 @RenderBody()
 
 <footer class="site-footer">
-    <a class="logo" href="/"><span>CC</span> Our Story</a>
+    <a class="logo" href="/"><span>@logoMark</span>@logoText</a>
     <p>Made with @Icon("heart", "footer-heart", "爱") for the two of us.</p>
-    <span>© @DateTime.Now.Year OUR LITTLE WORLD</span>
+    <span>© @DateTime.Now.Year @site.SiteDescription</span>
 </footer>
 
 <button class="to-top" type="button" aria-label="回到顶部" title="回到顶部" hidden>@Icon("arrow-up")</button>

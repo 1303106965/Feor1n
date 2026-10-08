@@ -9,8 +9,8 @@
     --cal-faint: var(--faint);
     --cal-line: var(--line);
     --cal-line-strong: var(--line-strong);
-    --cal-accent: var(--pink-dark);
-    --cal-accent-soft: var(--pink-soft);
+    --cal-accent: var(--accent-deep);
+    --cal-accent-soft: var(--accent-soft);
     --cal-row: 84px;
     --cal-agenda: 320px;
 

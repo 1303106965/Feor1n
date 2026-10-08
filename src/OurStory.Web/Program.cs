@@ -132,6 +132,7 @@ app.UseStaticFiles(new StaticFileOptions {
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseAntiforgery();
 app.UseDailyVisitReward();
 app.MapRazorPages();
 app.MapHeartbeatEndpoints();
@@ -139,6 +140,9 @@ app.MapMediaEndpoints();
 app.MapPushEndpoints();
 app.MapAtmosphereEndpoints();
 app.MapCycleInsightEndpoints();
+app.MapSpaShellEndpoints();
+app.MapSpaMomentEndpoints();
+app.MapSpaAnniversaryEndpoints();
 
 // 存活探针供容器与反向代理判断站点状态，仅检查数据库连接，
 // 不查询业务数据或渲染页面。
@@ -146,6 +150,9 @@ app.MapGet("/healthz", async (OurStoryDbContext db, CancellationToken cancellati
     await db.Database.CanConnectAsync(cancellationToken)
         ? Results.Text("ok")
         : Results.StatusCode(StatusCodes.Status503ServiceUnavailable));
+
+// 前端路由回退必须放在最后：任何没有命中 Razor 页或接口的地址都回到 SPA。
+app.MapSpaFallback();
 
 await app.InitializeDatabaseAsync();
 app.EnsurePushKeys();

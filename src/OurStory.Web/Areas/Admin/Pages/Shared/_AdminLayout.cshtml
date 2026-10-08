@@ -3,6 +3,8 @@
 @{
 	var site = await SettingsService.GetAsync();
 	var active = ViewData["ActiveMenu"] as string ?? string.Empty;
+	var logoMark = string.IsNullOrEmpty(site.SiteTitle) ? "♡" : site.SiteTitle.Substring(0, 1);
+	var logoText = site.SiteTitle is { Length: > 1 } ? site.SiteTitle.Substring(1) : string.Empty;
 	var flash = TempData["Flash"] as string;
 
 	// Quick 决定这一项会不会摆到手机顶栏上。总览固定在第一格，后面跟两个常用管理入口。
@@ -29,8 +31,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#fffaf8" media="(prefers-color-scheme: light)">
-	<meta name="theme-color" content="#17151b" media="(prefers-color-scheme: dark)">
+	<meta name="theme-color" content="#f7f4f0" media="(prefers-color-scheme: light)">
+	<meta name="theme-color" content="#161514" media="(prefers-color-scheme: dark)">
 	<title>@ViewData["Title"] · @site.SiteTitle 后台</title>
 	<link rel="icon" href="/favicon.ico">
 	<link rel="manifest" href="/manifest.webmanifest">
@@ -61,7 +63,7 @@
 	@* 移动端顶栏包含站名、常用入口、配色切换与完整导航入口。
 	   导航位于页面顶部，内容区域独立滚动。 *@
 	<header class="admin-bar">
-		<a class="admin-logo" href="/"><span>CC</span> Our Story</a>
+		<a class="admin-logo" href="/"><span>@logoMark</span>@logoText</a>
 		<nav class="admin-bar-nav" aria-label="常用入口">
 			@foreach (var item in quick)
 			{
@@ -74,7 +76,7 @@
 
 	<div class="admin-shell">
 		<aside class="admin-side">
-			<a class="admin-logo" href="/"><span>CC</span> Our Story</a>
+			<a class="admin-logo" href="/"><span>@logoMark</span>@logoText</a>
 			<nav aria-label="后台导航">
 				@foreach (var item in menu)
 				{

@@ -13,7 +13,7 @@
     transition: border-color .18s, box-shadow .18s;
 }
 
-.date-control:focus-within { border-color: var(--pink); box-shadow: 0 0 0 3px var(--pink-soft) }
+.date-control:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft) }
 
 .date-control input[data-date-input] {
     flex: 1 1 auto;
@@ -58,7 +58,7 @@
     transition: background-color .18s, color .18s;
 }
 
-.date-control-open:hover { background: var(--surface-muted); color: var(--pink-dark) }
+.date-control-open:hover { background: var(--surface-muted); color: var(--accent-deep) }
 
 .date-control-now {
     flex: none;
@@ -72,5 +72,5 @@
     transition: border-color .18s, color .18s;
 }
 
-.date-control-now:hover { border-color: var(--pink); color: var(--pink-dark) }
+.date-control-now:hover { border-color: var(--accent); color: var(--accent-deep) }
 .date-control-open[hidden], .date-control-now[hidden] { display: none }

@@ -1,8 +1,8 @@
 .cycle-page {
-    --phase-period: var(--pink);
-    --phase-period-soft: var(--pink-soft);
+    --phase-period: var(--accent);
+    --phase-period-soft: var(--accent-soft);
     --phase-predicted: #c9789a;
-    --phase-predicted-soft: color-mix(in srgb, var(--pink) 14%, transparent);
+    --phase-predicted-soft: color-mix(in srgb, var(--accent) 14%, transparent);
     --phase-fertile: #6f9e86;
     --phase-fertile-soft: color-mix(in srgb, #6f9e86 15%, transparent);
     --phase-ovulation: #4f8f9e;
@@ -23,7 +23,7 @@
 /* 1. 标题与入口 ---------------------------------------------------------- */
 
 .cycle-heading { padding: 148px 24px 44px; text-align: center }
-.cycle-heading > p { margin: 0; color: var(--pink-dark); font: 700 9px Arial, sans-serif; letter-spacing: .2em }
+.cycle-heading > p { margin: 0; color: var(--accent-deep); font: 700 9px Arial, sans-serif; letter-spacing: .2em }
 .cycle-heading h1 { margin: 12px 0; color: var(--ink); font: 400 clamp(40px, 6vw, 62px)/1.08 var(--serif); letter-spacing: -.04em }
 .cycle-heading > span { display: block; color: var(--muted); font-size: 13px }
 
@@ -52,9 +52,9 @@
     transition: border-color .18s, background-color .18s, color .18s;
 }
 
-.cycle-action:hover { border-color: var(--pink); color: var(--pink-dark) }
+.cycle-action:hover { border-color: var(--accent); color: var(--accent-deep) }
 .cycle-action.is-primary { border-color: transparent; background: var(--ink); color: var(--surface) }
-.cycle-action.is-primary:hover { background: var(--pink-dark); color: var(--surface) }
+.cycle-action.is-primary:hover { background: var(--accent-deep); color: var(--surface) }
 .cycle-action:disabled { cursor: wait; opacity: .55 }
 
 /* 2. 提示 ---------------------------------------------------------------- */
@@ -77,11 +77,11 @@
 .cycle-tag { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 999px; background: var(--surface-muted); color: var(--muted); font-size: 9px; white-space: nowrap }
 .cycle-tag.tone-normal { background: color-mix(in srgb, var(--card-mint) 78%, var(--surface)); color: #3f7a5f }
 .cycle-tag.tone-attention { background: color-mix(in srgb, var(--card-gold) 78%, var(--surface)); color: #96631c }
-.cycle-tag.tone-active { background: var(--pink-soft); color: var(--pink-dark) }
+.cycle-tag.tone-active { background: var(--accent-soft); color: var(--accent-deep) }
 
 .cycle-phase { display: inline-flex; align-items: center; gap: 5px; padding: 4px 11px; border-radius: 999px; font: 600 10px var(--sans) }
 .cycle-phase::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor }
-.cycle-phase.phase-period { background: var(--phase-period-soft); color: var(--pink-dark) }
+.cycle-phase.phase-period { background: var(--phase-period-soft); color: var(--accent-deep) }
 .cycle-phase.phase-predicted { background: var(--phase-predicted-soft); color: var(--phase-predicted) }
 .cycle-phase.phase-fertile { background: var(--phase-fertile-soft); color: var(--phase-fertile) }
 .cycle-phase.phase-ovulation { background: var(--phase-ovulation-soft); color: var(--phase-ovulation) }
@@ -109,19 +109,19 @@
 .cycle-ring svg { width: 100%; height: 100%; transform: rotate(-90deg) }
 .cycle-ring circle { fill: none; stroke-width: 9; stroke-linecap: round }
 .cycle-ring-track { stroke: color-mix(in srgb, var(--line-strong) 60%, transparent) }
-.cycle-ring-value { stroke: var(--pink); transition: stroke-dashoffset .5s ease }
-.cycle-status.is-active .cycle-ring-value { stroke: var(--pink-dark) }
+.cycle-ring-value { stroke: var(--accent); transition: stroke-dashoffset .5s ease }
+.cycle-status.is-active .cycle-ring-value { stroke: var(--accent-deep) }
 .cycle-ring-copy { position: absolute; inset: 0; display: grid; align-content: center; justify-items: center; gap: 4px }
 .cycle-ring-copy b { color: var(--ink); font: 400 46px/1 var(--serif) }
 .cycle-ring-copy span { color: var(--faint); font-size: 9px; letter-spacing: .08em }
 
 .cycle-status-copy { min-width: 0 }
-.cycle-status-copy > p { margin: 0 0 10px; color: var(--pink-dark); font: 700 9px Arial, sans-serif; letter-spacing: .18em }
+.cycle-status-copy > p { margin: 0 0 10px; color: var(--accent-deep); font: 700 9px Arial, sans-serif; letter-spacing: .18em }
 .cycle-status-copy h2 { margin: 0 0 8px; color: var(--ink); font: 400 clamp(25px, 4vw, 36px)/1.15 var(--serif) }
 .cycle-status-copy > span { display: block; color: var(--muted); font-size: 10px; line-height: 1.7 }
 
 .cycle-summary { margin: 18px 0 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: color-mix(in srgb, var(--surface) 82%, transparent) }
-.cycle-summary figcaption { display: flex; align-items: center; gap: 6px; color: var(--pink-dark); font-size: 9px; letter-spacing: .06em }
+.cycle-summary figcaption { display: flex; align-items: center; gap: 6px; color: var(--accent-deep); font-size: 9px; letter-spacing: .06em }
 .cycle-summary figcaption em { margin-left: auto; color: var(--faint); font-size: 8px; font-style: normal }
 .cycle-summary p { margin: 8px 0 0; color: var(--muted); font-size: 11px; line-height: 1.8 }
 
@@ -143,7 +143,7 @@
     padding: 0;
     border: 0;
     background: none;
-    color: var(--pink-dark);
+    color: var(--accent-deep);
     font-size: 10px;
     line-height: 1.6;
     cursor: pointer;
@@ -159,7 +159,7 @@
 .cycle-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 13px; margin: 18px 0 52px }
 .cycle-stats article { display: flex; min-width: 0; min-height: 132px; flex-direction: column; padding: 18px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface) }
 .cycle-stats article > span { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 9px }
-.cycle-stats article > span .icon { color: var(--pink-dark); font-size: 13px }
+.cycle-stats article > span .icon { color: var(--accent-deep); font-size: 13px }
 .cycle-stats strong { margin-top: auto; color: var(--ink); font: 400 27px/1 var(--serif) }
 .cycle-stats strong small { font: 500 11px var(--sans) }
 .cycle-stats p { margin: 8px 0 0; color: var(--faint); font-size: 9px; line-height: 1.5 }
@@ -168,18 +168,18 @@
    基础结构来自 calendar.css；此处定义花信主题、周期阶段、起止状态与记录标记。 */
 
 .cycle-calendar {
-    --cal-accent: var(--pink-dark);
-    --cal-accent-soft: var(--pink-soft);
+    --cal-accent: var(--accent-deep);
+    --cal-accent-soft: var(--accent-soft);
     --cal-agenda: 330px;
 }
 
 .cycle-calendar-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 19px 22px; border-bottom: 1px solid var(--line) }
-.cycle-calendar-header p, .cycle-history header p { margin: 0; color: var(--pink-dark); font: 700 9px Arial, sans-serif; letter-spacing: .2em }
+.cycle-calendar-header p, .cycle-history header p { margin: 0; color: var(--accent-deep); font: 700 9px Arial, sans-serif; letter-spacing: .2em }
 .cycle-calendar-header h2, .cycle-history header h2 { margin: 6px 0 0; color: var(--ink); font: 400 27px var(--serif) }
 .cycle-calendar-actions { display: flex; align-items: center; gap: 10px }
-.cycle-calendar-help { display: inline-flex; height: 34px; align-items: center; gap: 6px; padding: 0 14px; border: 1px solid var(--line-strong); border-radius: 999px; outline: 0; background: var(--surface); color: var(--pink-dark); font: 11px var(--sans); white-space: nowrap; cursor: pointer; transition: border-color .16s, background-color .16s, box-shadow .16s }
-.cycle-calendar-help:hover { border-color: var(--pink); background: var(--pink-softer) }
-.cycle-calendar-help:focus-visible { border-color: var(--pink); box-shadow: 0 0 0 3px var(--pink-soft) }
+.cycle-calendar-help { display: inline-flex; height: 34px; align-items: center; gap: 6px; padding: 0 14px; border: 1px solid var(--line-strong); border-radius: 999px; outline: 0; background: var(--surface); color: var(--accent-deep); font: 11px var(--sans); white-space: nowrap; cursor: pointer; transition: border-color .16s, background-color .16s, box-shadow .16s }
+.cycle-calendar-help:hover { border-color: var(--accent); background: var(--accent-softer) }
+.cycle-calendar-help:focus-visible { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft) }
 .cycle-calendar-help .icon { font-size: 13px }
 
 /* 使用背景色区分经期、卵泡期、易孕期、排卵日、黄体期、预测窗口和观察期。 */
@@ -192,11 +192,11 @@
 .cycle-calendar .calendar-day.phase-observation { background: var(--phase-observation-soft) }
 .cycle-calendar .calendar-day.is-future .calendar-day-number { color: var(--faint) }
 
-.cycle-calendar .calendar-day.phase-period .calendar-day-number { color: var(--pink-dark) }
+.cycle-calendar .calendar-day.phase-period .calendar-day-number { color: var(--accent-deep) }
 .cycle-calendar .calendar-day.phase-ovulation .calendar-day-number { color: var(--phase-ovulation) }
 .cycle-calendar .calendar-day.is-expected .calendar-day-number { border: 1px dashed var(--phase-predicted); color: var(--phase-predicted) }
 .cycle-calendar .calendar-day.has-intimacy .calendar-day-number { position: relative; width: 29px; min-width: 29px; height: 27px; padding: 0; border: 0; border-radius: 0; background: transparent; color: #fff; box-shadow: none }
-.cycle-calendar .calendar-day.has-intimacy .calendar-day-number svg { position: absolute; inset: -2px -2px -3px; width: 33px; height: 32px; overflow: visible; fill: var(--pink-dark); filter: drop-shadow(0 3px 5px color-mix(in srgb, var(--pink) 36%, transparent)) }
+.cycle-calendar .calendar-day.has-intimacy .calendar-day-number svg { position: absolute; inset: -2px -2px -3px; width: 33px; height: 32px; overflow: visible; fill: var(--accent-deep); filter: drop-shadow(0 3px 5px color-mix(in srgb, var(--accent) 36%, transparent)) }
 .cycle-calendar .calendar-day.has-intimacy .calendar-day-value { position: relative; z-index: 1; padding-bottom: 2px; font-size: 12px }
 .cycle-calendar .calendar-day.has-intimacy.is-future .calendar-day-number,
 .cycle-calendar .calendar-day.has-intimacy.phase-period .calendar-day-number,
@@ -224,7 +224,7 @@
 .cycle-calendar-legend i.has-period-log { width: 5px; height: 5px; border-radius: 50%; background: var(--phase-period) }
 .cycle-calendar-legend i.has-log { width: 5px; height: 5px; border-radius: 50%; background: var(--phase-ovulation) }
 .cycle-calendar-legend i.has-joint { width: 5px; height: 5px; border-radius: 50%; background: var(--phase-luteal) }
-.cycle-calendar-legend i.has-intimacy { display: inline-grid; width: 10px; height: 10px; place-items: center; border-radius: 0; color: var(--pink-dark); font: normal 11px/1 Arial, sans-serif }
+.cycle-calendar-legend i.has-intimacy { display: inline-grid; width: 10px; height: 10px; place-items: center; border-radius: 0; color: var(--accent-deep); font: normal 11px/1 Arial, sans-serif }
 
 /* 7. 右侧详情 ------------------------------------------------------------
    基础结构来自公共日历样式；此处定义花信阶段、操作入口与信息卡片。 */
@@ -237,18 +237,18 @@
 .cycle-agenda-hint { margin: 0; color: var(--faint); font-size: 9px; line-height: 1.7 }
 .cycle-agenda-record { padding: 13px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface) }
 .cycle-agenda-record strong { display: block; margin-bottom: 8px; color: var(--ink); font: 500 15px var(--serif) }
-.cycle-agenda-record blockquote { margin: 10px 0 0; padding-left: 9px; border-left: 2px solid var(--pink-soft); color: var(--muted); font-size: 10px; line-height: 1.7; white-space: pre-wrap }
+.cycle-agenda-record blockquote { margin: 10px 0 0; padding-left: 9px; border-left: 2px solid var(--accent-soft); color: var(--muted); font-size: 10px; line-height: 1.7; white-space: pre-wrap }
 .cycle-agenda-summary { margin: 9px 0 0; color: var(--muted); font-size: 10px; line-height: 1.75 }
 .cycle-agenda-log { display: grid; gap: 10px; padding: 13px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface) }
-.cycle-agenda-log.is-intimate { border-color: color-mix(in srgb, var(--pink) 34%, var(--line)); background: linear-gradient(145deg, var(--surface), color-mix(in srgb, var(--pink-softer) 34%, var(--surface))) }
+.cycle-agenda-log.is-intimate { border-color: color-mix(in srgb, var(--accent) 34%, var(--line)); background: linear-gradient(145deg, var(--surface), color-mix(in srgb, var(--accent-softer) 34%, var(--surface))) }
 .cycle-agenda-log-head { display: flex; min-height: 20px; align-items: center; justify-content: space-between; gap: 10px }
 .cycle-agenda-log-kinds { display: flex; flex-wrap: wrap; gap: 5px }
 .cycle-agenda-log-kinds span { display: inline-flex; min-height: 20px; align-items: center; padding: 0 8px; border-radius: 999px; font-size: 8px; font-weight: 600; letter-spacing: .03em }
-.cycle-agenda-log-kinds .is-period { background: var(--phase-period-soft); color: var(--pink-dark) }
+.cycle-agenda-log-kinds .is-period { background: var(--phase-period-soft); color: var(--accent-deep) }
 .cycle-agenda-log-kinds .is-daily { background: var(--phase-ovulation-soft); color: var(--phase-ovulation) }
-.cycle-agenda-log-kinds .is-intimacy { background: var(--pink-soft); color: var(--pink-dark) }
-.cycle-agenda-intimacy-hearts { display: flex; max-width: 55%; flex: none; flex-wrap: wrap; justify-content: flex-end; gap: 2px; color: var(--pink-dark) }
-.cycle-agenda-intimacy-hearts span { font: 400 15px/1 Arial, sans-serif; filter: drop-shadow(0 2px 4px color-mix(in srgb, var(--pink) 32%, transparent)) }
+.cycle-agenda-log-kinds .is-intimacy { background: var(--accent-soft); color: var(--accent-deep) }
+.cycle-agenda-intimacy-hearts { display: flex; max-width: 55%; flex: none; flex-wrap: wrap; justify-content: flex-end; gap: 2px; color: var(--accent-deep) }
+.cycle-agenda-intimacy-hearts span { font: 400 15px/1 Arial, sans-serif; filter: drop-shadow(0 2px 4px color-mix(in srgb, var(--accent) 32%, transparent)) }
 .cycle-agenda-facts { display: grid; gap: 6px; margin: 0 }
 .cycle-agenda-facts > div { display: flex; gap: 10px; font-size: 10px }
 .cycle-agenda-facts dt { flex: none; width: 52px; color: var(--faint) }
@@ -265,34 +265,34 @@
     padding: 0 22px;
     overflow: hidden;
     border-top: 0 solid transparent;
-    background: color-mix(in srgb, var(--pink-softer) 42%, var(--surface));
+    background: color-mix(in srgb, var(--accent-softer) 42%, var(--surface));
     opacity: 0;
     transition: max-height .24s ease, padding .24s ease, border-color .24s ease, opacity .16s ease;
 }
 .cycle-day-editor[hidden] { display: none }
 .cycle-day-editor.is-open { max-height: 2600px; padding: 22px; border-top-width: 1px; border-top-color: var(--line); opacity: 1 }
 .cycle-day-editor-head { display: grid; grid-template-columns: 42px minmax(0, 1fr); align-items: center; gap: 12px; margin-bottom: 20px }
-.cycle-day-editor-icon { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 14px; background: var(--pink-soft); color: var(--pink-dark); font-size: 19px }
-.cycle-day-editor-head p { margin: 0; color: var(--pink-dark); font: 700 8px Arial, sans-serif; letter-spacing: .2em }
+.cycle-day-editor-icon { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 14px; background: var(--accent-soft); color: var(--accent-deep); font-size: 19px }
+.cycle-day-editor-head p { margin: 0; color: var(--accent-deep); font: 700 8px Arial, sans-serif; letter-spacing: .2em }
 .cycle-day-editor-head h3 { margin: 4px 0 0; color: var(--ink); font: 400 20px var(--serif) }
 .cycle-day-editor-head div > span { display: block; margin-top: 5px; color: var(--muted); font-size: 10px; line-height: 1.6 }
 .cycle-day-editor-form { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 14px }
 .cycle-log-module { overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: color-mix(in srgb, var(--surface) 88%, transparent); transition: border-color .16s, box-shadow .16s }
-.cycle-log-module.is-open { border-color: color-mix(in srgb, var(--pink) 42%, var(--line)); box-shadow: 0 8px 22px color-mix(in srgb, var(--pink-soft) 26%, transparent) }
+.cycle-log-module.is-open { border-color: color-mix(in srgb, var(--accent) 42%, var(--line)); box-shadow: 0 8px 22px color-mix(in srgb, var(--accent-soft) 26%, transparent) }
 .cycle-log-module-head { display: flex; min-height: 66px; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 15px }
 .cycle-log-module-head > div { min-width: 0 }
 .cycle-log-module-head h4 { position: relative; margin: 0; padding-left: 12px; color: var(--ink); font: 600 12px var(--sans) }
-.cycle-log-module-head h4::before { content: ""; position: absolute; top: 2px; bottom: 2px; left: 0; width: 3px; border-radius: 999px; background: var(--pink) }
+.cycle-log-module-head h4::before { content: ""; position: absolute; top: 2px; bottom: 2px; left: 0; width: 3px; border-radius: 999px; background: var(--accent) }
 .cycle-log-module-head small { display: block; margin: 5px 0 0 12px; color: var(--faint); font-size: 9px; line-height: 1.45 }
 .cycle-module-toggle { position: relative; display: inline-flex; flex: none; align-items: center; gap: 7px; color: var(--muted); cursor: pointer }
 .cycle-module-toggle input { position: absolute; width: 1px; height: 1px; opacity: 0 }
 .cycle-module-toggle > span { position: relative; width: 36px; height: 21px; border: 1px solid var(--line-strong); border-radius: 999px; background: var(--surface-muted); transition: border-color .16s, background-color .16s }
 .cycle-module-toggle > span i { position: absolute; top: 3px; left: 3px; width: 13px; height: 13px; border-radius: 50%; background: var(--faint); transition: transform .16s, background-color .16s }
-.cycle-module-toggle input:checked + span { border-color: var(--pink); background: var(--pink-soft) }
-.cycle-module-toggle input:checked + span i { background: var(--pink-dark); transform: translateX(15px) }
-.cycle-module-toggle input:focus-visible + span { outline: 2px solid var(--pink); outline-offset: 2px }
+.cycle-module-toggle input:checked + span { border-color: var(--accent); background: var(--accent-soft) }
+.cycle-module-toggle input:checked + span i { background: var(--accent-deep); transform: translateX(15px) }
+.cycle-module-toggle input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px }
 .cycle-module-toggle em { display: inline-flex; align-items: center; gap: 4px; min-width: 27px; color: var(--faint); font-size: 9px; font-style: normal }
-.cycle-module-toggle input:checked ~ em { color: var(--pink-dark); font-weight: 600 }
+.cycle-module-toggle input:checked ~ em { color: var(--accent-deep); font-weight: 600 }
 .cycle-module-toggle em .icon { font-size: 11px }
 .cycle-log-module-body { padding: 14px 15px 15px; border-top: 1px dashed var(--line) }
 .cycle-log-module-body[hidden] { display: none }
@@ -302,11 +302,11 @@
 .cycle-day-editor-basics .cycle-field { margin: 0 }
 .cycle-select { position: relative; display: block }
 .cycle-select select { width: 100%; min-height: 44px; padding: 0 40px 0 13px; border: 1px solid var(--line-strong); border-radius: 12px; outline: 0; appearance: none; background: var(--surface); color: var(--ink); font: 600 12px var(--sans); cursor: pointer }
-.cycle-select select:focus { border-color: var(--pink); box-shadow: 0 0 0 3px var(--pink-soft) }
+.cycle-select select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft) }
 .cycle-select > .icon { position: absolute; top: 50%; right: 13px; color: var(--faint); font-size: 14px; pointer-events: none; transform: translateY(-50%) }
 .cycle-number { position: relative; display: block }
 .cycle-number input { width: 100%; min-height: 44px; padding: 0 42px 0 13px; border: 1px solid var(--line-strong); border-radius: 12px; outline: 0; background: var(--surface); color: var(--ink); font: 600 12px var(--sans) }
-.cycle-number input:focus { border-color: var(--pink); box-shadow: 0 0 0 3px var(--pink-soft) }
+.cycle-number input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft) }
 .cycle-number small { position: absolute; top: 50%; right: 14px; color: var(--faint); font-size: 10px; transform: translateY(-50%); pointer-events: none }
 .cycle-condition-body { display: grid; grid-template-columns: minmax(170px, .7fr) minmax(0, 1.3fr); align-items: start; gap: 18px }
 .cycle-condition-body > .cycle-field { margin: 0 }
@@ -341,12 +341,12 @@
 .cycle-timeline::before { content: ""; position: absolute; top: 12px; bottom: 12px; left: 27px; width: 1px; background: var(--line) }
 .cycle-timeline-item { position: relative; margin-bottom: 14px }
 .cycle-timeline-mark { position: absolute; top: 16px; left: -74px; display: grid; width: 56px; height: 56px; place-content: center; justify-items: center; border: 1px solid var(--line); border-radius: 50%; background: var(--surface) }
-.cycle-timeline-mark b { color: var(--pink-dark); font: 400 20px/1 var(--serif) }
+.cycle-timeline-mark b { color: var(--accent-deep); font: 400 20px/1 var(--serif) }
 .cycle-timeline-mark small { margin-top: 3px; color: var(--faint); font: 700 7px Arial, sans-serif; letter-spacing: .06em }
-.cycle-timeline-item.is-active .cycle-timeline-mark { border-color: var(--pink); background: var(--pink-soft) }
+.cycle-timeline-item.is-active .cycle-timeline-mark { border-color: var(--accent); background: var(--accent-soft) }
 
 .cycle-timeline-card { padding: 18px 20px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface) }
-.cycle-timeline-item.is-active .cycle-timeline-card { border-color: color-mix(in srgb, var(--pink) 45%, var(--line)) }
+.cycle-timeline-item.is-active .cycle-timeline-card { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)) }
 .cycle-timeline-card > header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px }
 .cycle-timeline-card h3 { margin: 0; color: var(--ink); font: 400 17px var(--serif) }
 .cycle-timeline-summary { margin: 12px 0 0; color: var(--muted); font-size: 11px; line-height: 1.8 }
@@ -356,12 +356,12 @@
 .cycle-timeline-facts dd { margin: 0; color: var(--ink); font-size: 12px }
 .cycle-timeline-symptoms { display: flex; align-items: center; gap: 6px; margin: 12px 0 0; color: var(--muted); font-size: 10px }
 .cycle-timeline-symptoms .icon { color: #b67825; font-size: 12px }
-.cycle-timeline-card blockquote { margin: 12px 0 0; padding-left: 10px; border-left: 2px solid var(--pink-soft); color: var(--muted); font-size: 10px; line-height: 1.7; white-space: pre-wrap }
+.cycle-timeline-card blockquote { margin: 12px 0 0; padding-left: 10px; border-left: 2px solid var(--accent-soft); color: var(--muted); font-size: 10px; line-height: 1.7; white-space: pre-wrap }
 .cycle-timeline-card > footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-top: 15px; padding-top: 13px; border-top: 1px dashed var(--line) }
 .cycle-timeline-card > footer small { color: var(--faint); font-size: 9px }
 
 .cycle-history-empty { display: grid; place-items: center; margin-top: 20px; padding: 42px; border: 1px dashed var(--line-strong); border-radius: 20px; color: var(--faint); text-align: center }
-.cycle-history-empty > .icon { margin-bottom: 12px; color: var(--pink-dark); font-size: 26px }
+.cycle-history-empty > .icon { margin-bottom: 12px; color: var(--accent-deep); font-size: 26px }
 .cycle-history-empty strong { color: var(--ink); font: 400 18px var(--serif) }
 .cycle-history-empty span { margin-top: 6px; font-size: 10px }
 .cycle-history .page-navigator { --page-navigator-margin-top: 28px }
@@ -375,8 +375,8 @@
 .cycle-dialog-card.is-small { width: min(420px, 100%) }
 .cycle-dialog-card.is-wide { width: min(600px, 100%) }
 .cycle-dialog-close { position: absolute; top: 14px; right: 16px; border: 0; background: none; color: var(--muted); font-size: 18px; cursor: pointer }
-.cycle-dialog-icon { display: grid; width: 54px; height: 54px; place-items: center; margin: 0 auto 16px; border-radius: 18px; background: var(--pink-soft); color: var(--pink-dark); font-size: 24px }
-.cycle-dialog-card > p { margin: 0 0 7px; color: var(--pink-dark); font: 700 8px Arial, sans-serif; letter-spacing: .22em }
+.cycle-dialog-icon { display: grid; width: 54px; height: 54px; place-items: center; margin: 0 auto 16px; border-radius: 18px; background: var(--accent-soft); color: var(--accent-deep); font-size: 24px }
+.cycle-dialog-card > p { margin: 0 0 7px; color: var(--accent-deep); font: 700 8px Arial, sans-serif; letter-spacing: .22em }
 .cycle-dialog-card > h2 { margin: 0 0 20px; color: var(--ink); font: 400 22px var(--serif) }
 .cycle-dialog-message { display: block; margin: -8px 0 22px; color: var(--muted); font-size: 10px; line-height: 1.7 }
 .cycle-dialog-actions { display: flex; gap: 10px; margin-top: 14px }
@@ -388,12 +388,12 @@
 .cycle-help-picker { display: block; width: 100%; margin: 0 0 14px; text-align: left }
 .cycle-help-select { position: relative; display: block }
 .cycle-help-select select { width: 100%; min-height: 38px; padding: 0 38px 0 12px; border: 1px solid var(--line-strong); border-radius: 11px; outline: 0; appearance: none; background: var(--surface); color: var(--ink); font: 600 10px var(--sans); cursor: pointer; transition: border-color .16s, box-shadow .16s }
-.cycle-help-select select:hover { border-color: var(--pink) }
-.cycle-help-select select:focus { border-color: var(--pink); box-shadow: 0 0 0 3px var(--pink-soft) }
+.cycle-help-select select:hover { border-color: var(--accent) }
+.cycle-help-select select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft) }
 .cycle-help-select > .icon { position: absolute; top: 50%; right: 12px; color: var(--faint); font-size: 13px; pointer-events: none; transform: translateY(-50%) }
 
 .cycle-help-content { min-height: 178px; text-align: left }
-.cycle-help-content article { padding: 20px; border: 1px solid var(--line); border-radius: 18px; background: color-mix(in srgb, var(--surface) 84%, var(--pink-softer)) }
+.cycle-help-content article { padding: 20px; border: 1px solid var(--line); border-radius: 18px; background: color-mix(in srgb, var(--surface) 84%, var(--accent-softer)) }
 .cycle-help-content article[hidden] { display: none }
 .cycle-help-content header { display: flex; align-items: center; gap: 11px }
 .cycle-help-content header > i { display: block; width: 20px; height: 20px; flex: none; border-radius: 6px }
@@ -410,7 +410,7 @@
 .cycle-help-content header > i.has-period-log { border-radius: 50%; background: var(--phase-period) }
 .cycle-help-content header > i.has-log { border-radius: 50%; background: var(--phase-ovulation) }
 .cycle-help-content header > i.has-joint { border-radius: 50%; background: var(--phase-luteal) }
-.cycle-help-content header > i.has-intimacy { display: grid; place-items: center; background: transparent; color: var(--pink-dark); font: normal 22px/1 Arial, sans-serif }
+.cycle-help-content header > i.has-intimacy { display: grid; place-items: center; background: transparent; color: var(--accent-deep); font: normal 22px/1 Arial, sans-serif }
 .cycle-help-content header small { display: block; margin-bottom: 2px; color: var(--faint); font-size: 8px; letter-spacing: .08em }
 .cycle-help-content h3 { margin: 0; color: var(--ink); font: 400 20px var(--serif) }
 .cycle-help-content p { margin: 14px 0 0; color: var(--ink); font-size: 11px; line-height: 1.85 }
@@ -423,7 +423,7 @@
 .cycle-field > span { display: flex; justify-content: space-between; gap: 8px }
 .cycle-field small { color: var(--faint) }
 .cycle-field textarea { width: 100%; min-width: 0; padding: 10px 13px; border: 1px solid var(--line-strong); border-radius: 12px; outline: 0; resize: vertical; background: var(--surface); color: var(--ink); font: 13px/1.6 var(--sans) }
-.cycle-field textarea:focus { border-color: var(--pink); box-shadow: 0 0 0 3px var(--pink-soft) }
+.cycle-field textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft) }
 
 /* 选项采用胶囊式布局，以改善触控范围与视觉一致性。 */
 .cycle-choice { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 16px; padding: 0; border: 0 }
@@ -433,9 +433,9 @@
 .cycle-choice label[hidden] { display: none }
 .cycle-choice input { position: absolute; width: 1px; height: 1px; opacity: 0 }
 .cycle-choice span { display: inline-flex; min-height: 32px; align-items: center; padding: 0 13px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--muted); font-size: 11px; cursor: pointer; transition: border-color .16s, background-color .16s, color .16s }
-.cycle-choice span:hover { border-color: var(--pink) }
-.cycle-choice input:checked + span { border-color: transparent; background: var(--pink-soft); color: var(--pink-dark); font-weight: 600 }
-.cycle-choice input:focus-visible + span { outline: 2px solid var(--pink); outline-offset: 2px }
+.cycle-choice span:hover { border-color: var(--accent) }
+.cycle-choice input:checked + span { border-color: transparent; background: var(--accent-soft); color: var(--accent-deep); font-weight: 600 }
+.cycle-choice input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px }
 
 /* 11. 窄屏 --------------------------------------------------------------- */
 
@@ -468,8 +468,8 @@
         height: 10px;
         border: 2px solid var(--surface);
         border-radius: 50%;
-        background: var(--pink);
-        box-shadow: 0 0 0 1px var(--pink-dark);
+        background: var(--accent);
+        box-shadow: 0 0 0 1px var(--accent-deep);
     }
 
     .cycle-timeline-mark b { margin-top: 9px; font-size: 16px }

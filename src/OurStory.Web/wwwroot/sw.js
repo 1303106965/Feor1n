@@ -12,7 +12,7 @@
   self.addEventListener('fetch', () => {});
 
   const FALLBACK = {
-    title: 'CC Our Story · 我们的故事',
+    title: 'Feor1n · 我们的故事',
     body: '你们的故事有了新的暖心动态',
     url: '/',
     tag: 'ourstory'

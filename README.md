@@ -1,202 +1,93 @@
-# ❤️ CC Our Story 情侣空间
+# Feor1n · 恋爱记录站
 
-<p align="center">
-  <strong>把两个人的心动、回忆和约定，写进属于自己的小宇宙</strong>
-</p>
+自托管的情侣私密小站：**照片时间轴 + 纪念日倒计时 + 相伴计时**，手机优先，PWA 可添加到主屏幕。基于开源项目 [keeleycenc/cc-our-story](https://github.com/keeleycenc/cc-our-story)（MIT）定制：**访客侧前端已整体重写为 Vite + React**，后端沿用其 ASP.NET Core 服务与数据层，现有数据零迁移。
 
-<p align="center">
-  <a href="https://github.com/keeleycenc/cc-our-story/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/keeleycenc/cc-our-story/actions/workflows/ci.yml/badge.svg"></a>
-  <a href="https://github.com/keeleycenc/cc-our-story/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/keeleycenc/cc-our-story?display_name=tag&sort=semver"></a>
-  <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/github/license/keeleycenc/cc-our-story"></a>
-  <img alt=".NET 10" src="https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet">
-  <img alt="Docker" src="https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white">
-</p>
+## 架构
 
-<p align="center">
-  <a href="https://keeleycenc.com"><strong>在线体验</strong></a> ·
-  <a href="#-本地部署">快速开始</a>
-  <a href="https://github.com/keeleycenc/cc-our-story/releases/latest">下载最新版</a> ·
-  <a href="https://github.com/keeleycenc/cc-our-story/issues">反馈建议</a>
-</p>
+```
+frontend/                 React SPA（Vite 6 + React 18 + TypeScript + Tailwind CSS v4）
+  └─ 构建产物 → src/OurStory.Web/wwwroot/spa/（已提交，服务器无需 node）
+src/OurStory.Web/Api/     JSON API（bootstrap / moments / anniversaries / auth / antiforgery）
+src/OurStory.Web/Areas/   后台管理（Razor，保留上游实现）
+src/OurStory.Services/    业务服务（上游，未改动）
+src/OurStory.Data/        EF Core + SQLite（上游，未改动）
+```
 
-[![CC Our Story 首页：深色与浅色主题预览](screenshot.png)](https://keeleycenc.com)
+生产部署是**单进程**：ASP.NET Core 同时服务 SPA 静态文件、JSON API 和后台页面，Docker 部署方式与上游一致。
 
-基于 ASP.NET Core Razor Pages、Entity Framework Core 和 SQLite，支持最低1 核 2G 的轻量服务器上 Docker 一键部署
+## 功能一览
 
-## ✨ 功能
+| 模块 | 说明 |
+| --- | --- |
+| 首页（React） | 电影式首页：海报首屏（年份/名字/短句/沉浸大图）→ 按时间正序的章节场景（01–0N 对应每条点滴）→ TODAY 黑场收尾（相伴计时 + 下一个纪念日） |
+| 点点滴滴（React） | 编辑式档案索引（发丝线条目、悬停浮现封面）、杂志文章排版（首字下沉、收窄正文）、图片 Lightbox（滑动切换）、留言、上锁记录密码解锁 |
+| 纪念日（React） | 数字统计、竖向时间轴、倒计时、公历/农历极简月历、纪念日故事页 |
+| 登录（React） | 画廊式登录框架，登录后直达后台，防伪令牌 + Cookie 会话 |
+| 后台（Razor） | 传图、写记录、管纪念日、改站点设置、账号口令、通知——功能与上游一致 |
+| 手机优先 | 极简底部导航、响应式布局、深色模式（与后台共用配色开关）、PWA（添加到主屏幕 + Web Push） |
 
-- 首页：展示彼此的信息、相伴时间和最近留下的回忆
-- 心动：男女主记录「想你」，路过的访客送上祝福
-- 点点滴滴：用图片和文字，按时间轴收藏相恋中的每个瞬间
-- 纪念日：记住每一个特别的日子，不错过下一次重逢
-- 留言：登录用户和访客都能写下想说的话，也可以彼此回复
-- 心意商城：把想为彼此做的事挂成心愿，用心意兑换、由对方履约确认
-- Web Push / Email 通知：两条渠道可独立开启或同时使用，TA 的每一刻更新都不会错过
-- LLM 氛围组：基于大语言模型的虚拟氛围组功能
-- 内容保护：重要的记录可以上锁，私密的纪念日只留给彼此
-- 后台：写记录、管纪念日和留言、传图片、改站点设置与账号口令等
-- 深浅色：默认跟随系统，也可以手动固定喜欢的配色
-- 图片懒加载：封面和正文图片用 WebP 派生资源，结合骨架屏和懒加载
-- 图片查看器：Lightbox 跟手滑动与渐进加载，压缩图先显，原图解码无感替换
-- 附件存储：默认存在本地，配好参数即可切换到阿里云 OSS
-- 内联图标：使用 [Lucide](https://lucide.dev) 图标子集，不依赖任何 CDN
-- 心有灵犀：私密资产，通过同步回答、默契测试与专属回忆，见证两个人逐渐靠近的每一次共鸣
-- 花信如期：私密资产，记录女友经期，提供周期参考、每日状态补充与模型小结
+## 设计系统
 
-## 🧩 权限模型
+「一部关于两个人的电影 / 一本高级摄影杂志」——不是情侣模板网站。
 
-只有三种身份：
+- **色彩**：画廊白 `#f4f1ec` / 近黑 `#16130f` / 暖灰 / 唯一点缀暗红（oxblood）`#7d2a24`，只出现在线条、编号与眉标上；深色模式为炭黑纸底
+- **字体**：展示衬线 Cormorant Garamond + 中文宋体系（Songti/Noto Serif）+ 正文 Inter + 中文黑体；元信息用等宽字体宽字距大写（`01 / EST. 2024 / CHAPTER 01 OF 06`），全部自托管（约 230KB）
+- **构图**：全出血章节、12 列不对称网格、图片与文字错位穿插、竖向章节标签、ghost 大编号、发丝线分隔——无圆角卡片、无爱心、无渐变糖果色
+- **动效**：Lenis 平滑滚动、IntersectionObserver 渐入与 Mask Reveal、图片 Ken Burns 慢缩放与视差、路由切换淡入、顶部 1px 阅读进度线；全部尊重 `prefers-reduced-motion`
+- 首页章节自动由「点滴」记录生成（按时间正序），标题/配图/日期/地点直接取自记录本身
 
-| 身份 | 有账号 | 能做什么 |
-| --- | --- | --- |
-| 男主 | ✅ | 后台全部功能，看得到草稿和上锁的记录 |
-| 女主 | ✅ | 后台全部功能，看得到草稿和上锁的记录 |
-| 访客 | ❌ | 已发布的内容、留言、点爱心送祝福等 |
+## 本地开发
 
-数据库里永远只有两行用户。访客没有账号，靠一串指纹（IP + UA + 站点密钥的哈希）区分，不存原始 IP
-
-## 📂 目录结构
+需要 [.NET SDK 10](https://dotnet.microsoft.com/download) 和 Node.js 20+。
 
 ```bash
-CC.OurStory/
-├─ .github/workflows/          # CI 与打包发布
-├─ docker/Dockerfile           # 运行镜像
-├─ src/                        # 源代码
-│  ├─ OurStory.Core/           # 领域模型、设置契约、通用工具（不依赖任何框架）
-│  ├─ OurStory.Data/           # EF Core + SQLite：DbContext、映射、迁移
-│  ├─ OurStory.Services/       # 业务服务
-│  └─ OurStory.Web/            # ASP.NET Core 站点
-│     ├─ Pages/                # 前台页面
-│     ├─ Areas/Admin/Pages/    # 后台
-│     ├─ Api/                  # 心动与通知接口
-│     ├─ Infrastructure/       # 图标、令牌、访客指纹、通知投递等
-│     └─ wwwroot/              # 样式脚本、manifest 与 Service Worker
-├─ tests/OurStory.Tests/       # 单元测试
-├─ compose.yaml                # 一键起站配置文件
-├─ Directory.Build.props       # 全解决方案共用的属性与包版本
-├─ global.json                 # 锁定的 SDK 大版本
-└─ OurStory.sln
+# 终端 1：后端（http://localhost:5080）
+dotnet run --project src/OurStory.Web
+
+# 终端 2：前端热更新开发服务器（http://localhost:5173，自动代理 /api /uploads /media 到 5080）
+cd frontend && npm install && npm run dev
 ```
 
-分层是单向的：`Web → Services → Data → Core`
+打开 <http://localhost:5173> 调试。首次启动自动建库并创建 `boy` / `girl` 两个账号，**随机口令只打印在后端启动日志里一次**（搜「初始口令」）。
 
-## 🧪 本地部署
+前端改完要发布：`cd frontend && npm run build`（产物直接输出到 `src/OurStory.Web/wwwroot/spa/`，把变更提交即可——生产环境不依赖 node）。
 
-### 需要什么
-
-- [.NET SDK 10](https://dotnet.microsoft.com/download)（`dotnet --version` 应当是 10.x）
-- 想用 Docker 的话，装个 Docker Desktop 就够了
-
-### 方式一：dotnet watch（开发时用这个）
-
-```powershell
-# 改 `.cshtml`、`.cs`、`wwwroot` 下的样式脚本都会立刻生效，不用停掉重开，浏览器还会自己刷新
-dotnet watch --project src/OurStory.Web
-```
-
-打开 <http://localhost:5080>。移动端需要访问的话需加 `--lan` 开启局域网监听：
-
-```powershell
-# 日志会打印内网地址。可指定端口：--lan 8080。Docker 不受此开关影响
-dotnet watch --project src/OurStory.Web --lan
-```
-
-第一次启动会自动建库，并创建 `boy` / `girl` 两个账号。**口令是随机生成的，只在启动日志里出现这一次**
-
-```text
-warn: OurStory.Web.Infrastructure[0]已创建 Boy 账号：登录名 boy，初始口令 xxxxxxxxxxxxxx —— 这串口令只在这里出现一次，登录后请到后台改掉
-```
-
-然后到 <http://localhost:5080/login> 登录，后台在 <http://localhost:5080/admin>
-
-### 方式二：Docker 一键起站
-
-```powershell
-Copy-Item .env.example .env
-docker compose up -d --build
-```
-
-打开 <http://localhost:8080>。两个账号的初始口令是随机生成的，从日志查看：
-
-```bash
-docker compose logs web
-```
-
-## 🚀 远端部署
+## 部署到服务器
 
 ### 方式一：Docker（推荐）
 
-把仓库拉到服务器上，照着 [Docker 一键起站](#方式二docker-一键起站) 做一遍就行。数据在名为 `ourstory_data` 的卷里
-
-### 方式二：把发布包拖到目录下
-
-在本机打包：
-
-```powershell
-dotnet publish src/OurStory.Web -c Release -o dist
-```
-
-服务器上装了 .NET 10 运行时的话，把 `dist/` 整个传上去，然后：
-
 ```bash
-dotnet OurStory.Web.dll
+cp .env.example .env      # 按需改 HTTP_PORT，默认 8080
+docker compose up -d --build
+docker compose logs web   # 找两个账号的初始口令
 ```
 
-服务器上什么都没装，就打一个自带运行时的包（不需要目标机装任何东西）：
-
-```powershell
-dotnet publish src/OurStory.Web -c Release -r linux-x64 --self-contained true -o dist
-```
-
-传上去之后 `chmod +x OurStory.Web && ./OurStory.Web` 即可。[Releases](../../releases) 里两种包都有现成的
-
-站点默认监听 5000 端口，想换用 `ASPNETCORE_HTTP_PORTS=8080`。长期跑建议交给 systemd：
-
-```ini
-# /etc/systemd/system/ourstory.service
-[Unit]
-Description=CC Our Story
-After=network.target
-
-[Service]
-WorkingDirectory=/srv/ourstory
-ExecStart=/srv/ourstory/OurStory.Web
-Restart=always
-RestartSec=5
-User=www-data
-Environment=ASPNETCORE_HTTP_PORTS=8080
-
-[Install]
-WantedBy=multi-user.target
-```
-
-`WorkingDirectory` 一定要写：`App_Data` 是相对当前工作目录解析的，不写的话 systemd 会用 `/`，数据库就跑到根目录去了。不想操心这个就加一行 `Environment=OURSTORY_DATA_DIR=/srv/ourstory-data`，写绝对路径
-
-### 升级
-
-**Docker 的话不用管文件**，重新构建镜像就行，数据在卷里不受影响：
+数据都在 `ourstory_data` 卷里，升级/迁移不丢：
 
 ```bash
 git pull
-docker compose up -d --build
+docker compose up -d --build          # 升级（数据不受影响）
+
+# 备份数据卷
+docker run --rm -v ourstory_data:/data -v $(pwd):/backup alpine \
+  tar czf /backup/ourstory-data.tgz -C /data .
 ```
 
-**发布包的话就是解压覆盖**，但顺序不能乱 —— 必须先停进程：
+### 方式二：发布包 + systemd
 
 ```bash
-systemctl stop ourstory
-cp -a /srv/ourstory/App_Data /srv/backup/App_Data-$(date +%F)   # 备份
-unzip -o CCOurStory-v1.0.1-linux-x64.zip -d /srv/ourstory
-chmod +x /srv/ourstory/OurStory.Web                             # 自带运行时的包才需要
-systemctl start ourstory
+dotnet publish src/OurStory.Web -c Release -o dist
+# 或自包含：dotnet publish src/OurStory.Web -c Release -r linux-x64 --self-contained true -o dist
 ```
 
-### 放在 Nginx 后面
+完整步骤见 [UPSTREAM.md](UPSTREAM.md)「远端部署」（注意 `OURSTORY_DATA_DIR` 用绝对路径）。
+
+### Nginx 反代（配好证书后通知功能才可用）
 
 ```nginx
 server {
     listen 80;
-    server_name our.example.com;
+    server_name love.example.com;
 
     location / {
         proxy_pass         http://127.0.0.1:8080;
@@ -205,146 +96,57 @@ server {
         proxy_set_header   X-Real-IP         $remote_addr;
         proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
         proxy_set_header   X-Forwarded-Proto $scheme;
-        proxy_set_header   Upgrade           $http_upgrade;
-        proxy_set_header   Connection        keep-alive;
     }
 }
 ```
 
-`X-Forwarded-For` 一定要转发：访客指纹靠它区分不同的人，缺了这个头，所有访客会被算成同一个
+`X-Forwarded-For` 必须转发（访客指纹依赖它）。HTTPS 证书可用 certbot / acme.sh 申请。
 
-## 🔔 通知
+## 部署后第一次要做的事
 
-本站支持浏览器标准 Web Push 与 SMTP Email 两条通知渠道。两条渠道彼此独立，任一渠道暂时不可用都不会阻止另一条继续投递
+1. 登录 `/admin`，到「账号」改掉初始口令（两个账号都要）
+2. 「站点设置」→ 两个人：填男主/女主名字、**在一起的时间**、个性短句（改名字后前台 Logo、称呼即时跟随）
+3. 「图片」上传照片 → 「点点滴滴」写记录，正文插图、设封面
+4. 「纪念日」添加重要日子：在一起、生日、旅行……勾选「每年重复」就会每年倒计时
+5. 手机打开站点 → 浏览器菜单「添加到主屏幕」→ 后台「通知」开启推送（需 HTTPS）
 
-**前提**：站点必须使用 HTTPS（本地调试 `http://localhost` 亦可）。反代请配好证书，否则浏览器不会授予通知权限
+> 忘记口令：`docker compose exec web dotnet OurStory.Web.dll --reset-password boy`（详见 UPSTREAM.md「忘记口令」）
 
-### Web Push 开通步骤
+## 主要接口
 
-**需要双方各自操作一遍：**
-
-1. **iOS 强制（Android 和 PC 端跳过此步）**：iPhone/iPad 需先用 Safari 打开站点，点击「分享 → 添加到主屏幕」，之后从主屏幕图标进入
-2. 进入「后台 → 通知」，点击「开启通知」，浏览器弹出权限框时选择「允许」
-3. 勾选需要接收的通知项，保存
-
-每台设备（手机、平板、电脑）需单独开通，已开通设备统一列出，可随时移除
-
-### Email 开通步骤
-
-1. 站点管理员进入「后台 → 站点设置 → 邮件通知」，填写 SMTP Host、端口、加密方式、账号、密码或授权码、发件地址及站点公开地址并启用服务
-2. 双方各自进入「后台 → 通知」，填写自己的接收邮箱，可先发送测试邮件确认投递
-3. 在接收渠道中勾选 Email；Topic 偏好会同时作用于 Email 与 Web Push
-
-SMTP 发送基于 MailKit，支持不加密、STARTTLS 与 SSL/TLS，可用于 QQ 邮箱、163、Gmail、Outlook 或自建 SMTP
-
-### 注意事项
-
-- **VAPID 密钥**（站点在浏览器端的身份标识）首次启动自动生成，保存在数据目录的 `ourstory.json` 中。**请勿修改**，否则所有已授权设备将集体失效
-- 若配置文件为只读挂载，启动日志会提示通知功能不可用
-- 同一浏览器只存一份推送订阅。多账号切换登录时，订阅归属**最后点开启**的账号，另一账号设备列表会清空——属浏览器限制，非站点问题。通知页会标明当前归属。多人需各自收通知请用不同浏览器
-- 订阅保留在浏览器中，清空服务端设备记录不会自动退订。如页面提示「服务端已无对应记录」，点击开启重新登记即可，无需手动撤销浏览器权限
-- **Chrome 首次读取通知状态可能很慢**（要连 Google 的推送服务，网络不通时能卡一两分钟），Edge 走 Windows 通知服务则很快
-
-## 🫂 氛围组
-
-- 发布「点点滴滴」后，它们会隔几分钟到几小时偶尔留下一两句，也可以回复评论，让情侣空间更有生活气息
-- 只要兼容 **OpenAI Responses 协议**就能接入：官方、第三方服务或自建网关都可以，不绑定具体厂商
-
-### 添加角色
-
-进入「后台 → 氛围组 → 添加角色」：
-
-| 配置项 | 说明 |
+| 接口 | 说明 |
 | --- | --- |
-| 名字、头像、人设 | 定义角色是谁、什么性格 |
-| 服务地址 | 例如 `https://api.openai.com/v1` |
-| 模型、API Key | 配置实际使用的模型服务 |
-| 会看图 | 支持时会结合动态图片一起理解 |
-| 概率与延迟 | 控制留言、回复概率和随机等待时间 |
+| `GET /api/bootstrap` | 站点设置、当前身份、防伪令牌、心动令牌与统计、计数、功能状态 |
+| `GET /api/home` | 随机情话、最近 3 条点滴 |
+| `GET /api/moments?page=` | 点滴分页列表（封面为 /media 缩略图） |
+| `GET/POST /api/moments/{slug}…` | 详情、密码解锁、留言（POST 带 `RequestVerificationToken` 头） |
+| `GET /api/anniversaries…` | 总览、时间轴、即将到来、公历/农历月历、故事详情 |
+| `POST /api/auth/login` / `logout` / `GET /api/auth/me` | 登录登出与身份 |
+| `GET /api/antiforgery` | 防伪令牌下发 |
+| `POST /api/heartbeat` | 心动上报（沿用上游，表单提交 + 令牌） |
 
-可以添加多个角色，每个角色使用不同的模型、服务和人设
+## 与上游 cc-our-story 的差异
 
-### 注意
+- 访客侧前端整体重写为 **Vite + React + TypeScript + Tailwind** SPA（原 Razor 公开页 Index / Moments / Anniversaries / Login 已移除，`/moments`、`/anniversaries`、`/login` 等路由由 SPA 接管）
+- 新增 JSON API 层与防伪校验（JSON 端点手动校验 `IAntiforgery.IsRequestValidAsync`）
+- 后台管理、心有灵犀 / 花信如期 / 心意商城保留 Razor 实现（从 SPA 直接跳转，功能无损）
+- 品牌 Feor1n（默认值在 `SiteSettings.cs`，Logo 动态读站点标题）、自定义图标、标题文案
+- 全站视觉重制为电影感/编辑式设计系统（见上文「设计系统」）：访客侧 SPA 与 Razor 后台共用同一套 token（`--accent*` 等），深色模式同步
+- `Directory.Build.props`：ImageSharp 3.1.12 的 NuGet 审计项降级为警告（3.1.x 无修复版，4.x 需 License Key），上游出修复版后随版本号清理
+- 上游原文档保留在 [UPSTREAM.md](UPSTREAM.md)（其中「前台 Razor 页面」相关章节已不适用，运维、数据库、通知等章节仍有效）
 
-- 草稿不会发送给模型，上锁内容默认也不会发送
-- 图片分析失败或模型不支持图片时，会自动降级为纯文本
-- 每个角色不会在同一条记录下反复开新留言，避免刷屏
-- 模型超时、限流或调用失败不会影响正常发布和留言
-- 延迟任务丢失时，后台巡检会尝试补回近期遗漏的互动
+## 目录结构
 
-## ❓ 忘记口令
-
-站点没有「找回密码」的页面 —— 只有两个人用，加邮件找回不值当，而且多一个对外入口就多一处能被打的地方。重置放在命令行上：能敲到这条命令的人，本来就已经能读到数据库文件了
-
-先看看有哪些账号：
-
-```bash
-# 本地 
-dotnet run --project src/OurStory.Web -- --list-accounts 
-
-# 容器 
-docker compose exec web dotnet OurStory.Web.dll --list-accounts 
-
-# 服务器 
-cd /srv/ourstory && ./OurStory.Web --list-accounts
+```
+frontend/src/            SPA 源码（pages/components/lib/context）
+src/OurStory.Core       领域模型与配置
+src/OurStory.Data       EF Core + SQLite
+src/OurStory.Services   业务服务
+src/OurStory.Web        ASP.NET Core 站点（Api/ 新接口，Areas/Admin/ 后台，wwwroot/spa/ SPA 产物）
+docker/ compose.yaml    Docker 构建与一键部署
+UPSTREAM.md             上游项目完整文档（运维细节以它为准）
 ```
 
-重置成一串随机口令（打印出来，只出现这一次）：
+## 许可
 
-```bash
-# 本地
-dotnet run --project src/OurStory.Web -- --reset-password boy
-
-# 容器
-docker compose exec web dotnet OurStory.Web.dll --reset-password boy
-
-# 服务器
-cd /srv/ourstory && ./OurStory.Web --reset-password boy
-```
-
-想自己指定就再带一个参数（至少 8 位）：`--new-password '新口令'`。维护命令执行完就退出，**不会**启动站点、不会占端口。`--help` 能看到全部
-
-## 🗄️ 数据库
-
-用 EF Core 迁移，启动时自动执行。改了实体之后生成新迁移：
-
-```bash
-dotnet tool restore
-dotnet dotnet-ef migrations add 迁移名 --project src/OurStory.Data
-```
-
-## 😃 git commit emoji
-
-| emoji | emoji代码 | commit 说明 |
-| ----- | ----- | ----- |
-| 🎉 | `:tada:` | 初次提交 |
-| ✨ | `:sparkles:` | 新功能 |
-| ⚡️ | `:zap:` | 性能改善 |
-| 🐛 | `:bug:` | 修复 Bug |
-| 🚑️ | `:ambulance:` | 紧急修复 Bug |
-| 🎨 | `:art:` | 改进代码结构/代码格式 |
-| 🚚 | `:truck:` | 移动或重命名文件、目录、命名空间等 |
-| 💄 | `:lipstick:` | 更新 UI 和样式文件 |
-| 🔥 | `:fire:` | 移除代码或文件 |
-| 📝 | `:memo:` | 撰写文档 |
-| 🚀 | `:rocket:` | 部署功能 |
-| ✅ | `:white_check_mark:` | 添加或更新测试 |
-| 🔒️ | `:lock:` | 更新安全相关代码 |
-| ⬆️ | `:arrow_up:` | 升级依赖 |
-| ⬇️ | `:arrow_down:` | 降级依赖 |
-| 🔀 | `:twisted_rightwards_arrows:` | 合并分支 |
-| ⏪️ | `:rewind:` | 回退到上一个版本 |
-| 🔧 | `:wrench:` | 修改配置文件 |
-| 🗑️ | `:wastebasket:` | 删除不再需要的代码或文件 |
-| ✏️ | `:pencil2:` | 修正拼写或语法错误 |
-| ♻️ | `:recycle:` | 重构代码 |
-| 💩 | `:poop:` | 改进的(屎)坏(山)代码 |
-| 👻 | `:ghost:` | 添加或更新 GIF |
-| 👷 | `:construction_worker:` | 添加或更新 CI 构建系统 |
-| 🥚 | `:egg:` | 添加或更新彩蛋 |
-| 🏗️ | `:building_construction:` | 进行体系结构更改/重大重构 |
-| 💡 | `:bulb:` | 在源代码中添加或更新注释 |
-
-## 📄 许可证
-
-项目代码使用 [MIT License](LICENSE)
+上游 [cc-our-story](https://github.com/keeleycenc/cc-our-story) 为 MIT 协议，本项目微调与重写部分沿用 MIT。

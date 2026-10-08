@@ -14,12 +14,12 @@ public class SiteSettings {
     /// <summary>
     /// 获取或设置 SiteTitle
     /// </summary>
-    public string SiteTitle { get; set; } = "CC Our Story";
+    public string SiteTitle { get; set; } = "Feor1n";
 
     /// <summary>
     /// 获取或设置 SiteDescription
     /// </summary>
-    public string SiteDescription { get; set; } = "两个人的小宇宙";
+    public string SiteDescription { get; set; } = "我们的恋爱存档";
 
     /// <summary>
     /// 获取或设置 BoyName

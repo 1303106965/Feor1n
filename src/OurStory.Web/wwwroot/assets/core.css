@@ -19,10 +19,10 @@ button, a { font: inherit }
 a { text-decoration: none; color: inherit }
 button { color: inherit; border: 0; background: none }
 img { max-width: 100%; display: block }
-::selection { background: var(--pink); color: #fff }
+::selection { background: var(--accent); color: #fff }
 
 :focus-visible {
-    outline: 2px solid var(--pink);
+    outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 6px;
 }
@@ -107,7 +107,7 @@ img { max-width: 100%; display: block }
     width: 36px;
     height: 36px;
     border-radius: 13px;
-    background: linear-gradient(135deg, #ef9cac, #cf718c);
+    background: linear-gradient(135deg, #b34840, #8a2d27);
     color: #fff;
     font: 700 12px Arial;
     letter-spacing: -1px;
@@ -142,7 +142,7 @@ img { max-width: 100%; display: block }
 .site-nav nav a.active,
 .site-nav nav a:hover {
     background: var(--surface);
-    color: var(--pink-dark);
+    color: var(--accent-deep);
     box-shadow: var(--shadow-sm);
 }
 
@@ -168,7 +168,7 @@ img { max-width: 100%; display: block }
 
 .theme-toggle { width: 36px; padding: 0; justify-content: center }
 .theme-toggle .icon, .admin-link .icon { font-size: 16px }
-.theme-toggle:hover, .admin-link:hover { color: var(--pink-dark); border-color: var(--line-strong) }
+.theme-toggle:hover, .admin-link:hover { color: var(--accent-deep); border-color: var(--line-strong) }
 
 /* 配色按钮上的图标跟着“选择”走，而不是跟着最终配色走：
    跟随系统 → 半阴半阳，手动选了才显示太阳或月亮。没有 JS 时停在跟随系统 */
@@ -190,7 +190,7 @@ img { max-width: 100%; display: block }
 }
 
 .site-footer p { display: inline-flex; align-items: center; gap: 7px; font: italic 13px Georgia; color: #c4bdc5 }
-.footer-heart { color: var(--pink); fill: currentColor; stroke-width: 1.5px }
+.footer-heart { color: var(--accent); fill: currentColor; stroke-width: 1.5px }
 .site-footer > span { font: 8px Arial; letter-spacing: .2em; color: #867f88 }
 .site-footer .logo > span { box-shadow: none }
 
@@ -205,7 +205,7 @@ img { max-width: 100%; display: block }
     place-items: center;
     border-radius: 14px;
     background: var(--surface);
-    color: var(--pink-dark);
+    color: var(--accent-deep);
     font-size: 19px;
     border: 1px solid var(--line);
     box-shadow: var(--shadow-sm);
@@ -241,21 +241,21 @@ img { max-width: 100%; display: block }
 }
 
 .modal-close { position: absolute; right: 17px; top: 14px; font-size: 20px; color: var(--muted); cursor: pointer; line-height: 0 }
-.modal-close:hover { color: var(--pink-dark) }
+.modal-close:hover { color: var(--accent-deep) }
 
 .modal-heart {
     display: grid;
     place-items: center;
     width: 58px;
     height: 58px;
-    background: var(--pink-soft);
-    color: var(--pink-dark);
+    background: var(--accent-soft);
+    color: var(--accent-deep);
     border-radius: 19px;
     margin: auto;
     font-size: 26px;
 }
 
-.modal-card > p { font: 700 8px Arial; letter-spacing: .25em; color: var(--pink-dark); margin: 21px 0 8px }
+.modal-card > p { font: 700 8px Arial; letter-spacing: .25em; color: var(--accent-deep); margin: 21px 0 8px }
 .modal-card h2 { font: 400 29px var(--serif); margin: 0 0 13px }
 .modal-card > span:not(.modal-heart) { font-size: 12px; line-height: 1.8; color: var(--muted) }
 
@@ -294,7 +294,7 @@ img { max-width: 100%; display: block }
     border-radius: inherit;
 }
 
-.article-figure-frame:focus-visible { outline: 2px solid var(--pink-dark); outline-offset: 3px }
+.article-figure-frame:focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 3px }
 
 p > .article-figure-frame { display: inline-block; width: auto; max-width: 100%; vertical-align: middle }
 .article-body p > .article-figure-frame img { width: auto; max-width: 100% }
@@ -391,4 +391,37 @@ p > .article-figure-frame { display: inline-block; width: auto; max-width: 100%;
 
     /* 骨架不扫光，留一块素色占位就够了 */
     :root.has-js [data-cover]:before { background: var(--surface-muted); animation: none !important }
+}
+
+/* 错误页：前台由 SPA 兜底，这里供 /api、/admin 等场景的 Razor 错误页使用 */
+.empty-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 96px 24px;
+    gap: 10px;
+    color: var(--muted);
+}
+
+.empty-page .icon {
+    width: 44px;
+    height: 44px;
+    color: var(--faint);
+}
+
+.empty-page h1 {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.empty-page a {
+    color: var(--accent-deep);
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
