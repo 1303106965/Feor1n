@@ -32,7 +32,7 @@
 		<XunitVersion>2.9.3</XunitVersion>
 
 		<!-- 固定 3.1.x：4.x 起直接引用 ImageSharp 需要在构建时提供 Six Labors License Key。 -->
-		<ImageSharpVersion>3.1.12</ImageSharpVersion>
+		<ImageSharpVersion>4.1.2</ImageSharpVersion>
 
 		<!-- ImageSharp 3.1.12 是 3.1.x 的最终版，其已知漏洞暂无修复版可升（4.x 需 License Key），
 		     把这些审计项降级为警告，避免恢复包时直接构建失败；上游发布修复版后再随版本号一起清理。 -->
