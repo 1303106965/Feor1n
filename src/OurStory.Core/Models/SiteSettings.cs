@@ -24,12 +24,12 @@ public class SiteSettings {
     /// <summary>
     /// 获取或设置 BoyName
     /// </summary>
-    public string BoyName { get; set; } = "Feor";
+    public string BoyName { get; set; } = "yzh";
 
     /// <summary>
     /// 获取或设置 GirlName
     /// </summary>
-    public string GirlName { get; set; } = "R1n";
+    public string GirlName { get; set; } = "小飞云";
 
     /// <summary>
     /// 获取或设置 BoyAvatar
