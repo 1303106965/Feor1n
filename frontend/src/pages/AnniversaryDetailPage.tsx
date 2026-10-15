@@ -35,7 +35,7 @@ export default function AnniversaryDetailPage() {
         <span className="ghost-num">404</span>
         <p className="kicker">LOST DATE</p>
         <p className="display-md" style={{ marginTop: 12 }}>
-          这个纪念日暂时走丢了。
+          这个日子暂时隐没在风里。
         </p>
         <Link to="/anniversaries" className="chapter-link" style={{ marginTop: 22 }}>
           回到纪念日
@@ -53,8 +53,8 @@ export default function AnniversaryDetailPage() {
       <header className="article-head">
         <p className="kicker" data-reveal="fade">
           {item.kindName}
-          {item.repeatYearly ? ' · 每年重逢' : ''}
-          {item.isPrivate ? ' · 仅情侣可见' : ''}
+          {item.repeatYearly ? ' · 岁岁重逢' : ''}
+          {item.isPrivate ? ' · 只属于彼此' : ''}
         </p>
         <h1 className="display-lg" data-reveal style={{ '--rd': '80ms' } as CSSProperties}>
           {item.title}
@@ -64,7 +64,7 @@ export default function AnniversaryDetailPage() {
             {item.calendarName} {formatDateLong(item.originalDate)}
           </span>
           {item.lunarDate ? <span>原农历 {item.lunarDate}</span> : null}
-          <span>由 {item.authorName} 记录</span>
+          <span>由 {item.authorName} 写就</span>
         </div>
         <p
           className="meta"
@@ -72,10 +72,10 @@ export default function AnniversaryDetailPage() {
           data-reveal
         >
           {item.isToday
-            ? '就在今天'
+            ? '正是今天'
             : item.nextDate === null
-              ? '一次被好好收藏的日子'
-              : `下一次还有 ${item.daysUntil} 天`}
+              ? '一段被妥帖珍藏的日子'
+              : `下一次重逢，还有 ${item.daysUntil} 天`}
         </p>
       </header>
 
@@ -88,7 +88,7 @@ export default function AnniversaryDetailPage() {
       ) : (
         <div className="article-body">
           <p style={{ textAlign: 'center', color: 'var(--muted)' }}>
-            这一天的故事，还等着你们慢慢写下来。
+            这一天的故事，还在等待被慢慢写满。
           </p>
         </div>
       )}

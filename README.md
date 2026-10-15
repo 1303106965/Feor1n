@@ -22,6 +22,7 @@ src/OurStory.Data/        EF Core + SQLite（上游，未改动）
 | 首页（React） | 电影式首页：海报首屏（年份/名字/短句/沉浸大图）→ 按时间正序的章节场景（01–0N 对应每条点滴）→ TODAY 黑场收尾（相伴计时 + 下一个纪念日） |
 | 点点滴滴（React） | 编辑式档案索引（发丝线条目、悬停浮现封面）、杂志文章排版（首字下沉、收窄正文）、图片 Lightbox（滑动切换）、留言、上锁记录密码解锁 |
 | 纪念日（React） | 数字统计、竖向时间轴、倒计时、公历/农历极简月历、纪念日故事页 |
+| 相册（React） | 编辑式马赛克影集：按年份分组、错落跨列网格、遮罩渐入与悬停字幕动画、全屏灯箱（入场缩放/左右滑动切换/图注/跳回章节） |
 | 登录（React） | 画廊式登录框架，登录后直达后台，防伪令牌 + Cookie 会话 |
 | 后台（Razor） | 传图、写记录、管纪念日、改站点设置、账号口令、通知——功能与上游一致 |
 | 手机优先 | 极简底部导航、响应式布局、深色模式（与后台共用配色开关）、PWA（添加到主屏幕 + Web Push） |
@@ -34,7 +35,7 @@ src/OurStory.Data/        EF Core + SQLite（上游，未改动）
 - **字体**：展示衬线 Cormorant Garamond + 中文宋体系（Songti/Noto Serif）+ 正文 Inter + 中文黑体；元信息用等宽字体宽字距大写（`01 / EST. 2024 / CHAPTER 01 OF 06`），全部自托管（约 230KB）
 - **构图**：全出血章节、12 列不对称网格、图片与文字错位穿插、竖向章节标签、ghost 大编号、发丝线分隔——无圆角卡片、无爱心、无渐变糖果色
 - **动效**：Lenis 平滑滚动、IntersectionObserver 渐入与 Mask Reveal、图片 Ken Burns 慢缩放与视差、路由切换淡入、顶部 1px 阅读进度线；全部尊重 `prefers-reduced-motion`
-- 首页章节自动由「点滴」记录生成（按时间正序），标题/配图/日期/地点直接取自记录本身
+- 首页章节自动由「点滴」记录生成（按时间正序），标题/配图/日期/地点直接取自记录本身；相册同样自动汇总所有点滴里的照片
 
 ## 本地开发
 
@@ -68,8 +69,8 @@ docker compose logs web   # 找两个账号的初始口令
 git pull
 docker compose up -d --build          # 升级（数据不受影响）
 
-# 备份数据卷
-docker run --rm -v ourstory_data:/data -v $(pwd):/backup alpine \
+# 备份数据卷（卷名带 compose 项目前缀，用 grep 拿真实名字更稳）
+docker run --rm -v "$(docker volume ls -q | grep ourstory_data | head -1):/data" -v "$(pwd):/backup" alpine \
   tar czf /backup/ourstory-data.tgz -C /data .
 ```
 
@@ -121,6 +122,7 @@ server {
 | `GET /api/moments?page=` | 点滴分页列表（封面为 /media 缩略图） |
 | `GET/POST /api/moments/{slug}…` | 详情、密码解锁、留言（POST 带 `RequestVerificationToken` 头） |
 | `GET /api/anniversaries…` | 总览、时间轴、即将到来、公历/农历月历、故事详情 |
+| `GET /api/gallery` | 相册：汇总全部已发布点滴里的照片（封面 + 正文配图），上锁内容仅情侣可见 |
 | `POST /api/auth/login` / `logout` / `GET /api/auth/me` | 登录登出与身份 |
 | `GET /api/antiforgery` | 防伪令牌下发 |
 | `POST /api/heartbeat` | 心动上报（沿用上游，表单提交 + 令牌） |

@@ -47,6 +47,7 @@ export default function HomePage() {
 
   const site = data.site;
   const elapsed = loveElapsed(site.loveStartedAt, now);
+  const metElapsed = loveElapsed(site.metStartedAt, now);
   const startYear = site.loveStartedAt.slice(0, 4);
   const chapters = moments ?? [];
   const poster = chapters[0] ?? chapters[chapters.length - 1];
@@ -113,7 +114,7 @@ export default function HomePage() {
                     </p>
                   ) : null}
                   <Link className="chapter-link" to={`/moments/${moment.slug}`} data-reveal style={{ '--rd': '300ms' } as CSSProperties}>
-                    阅读这一章 <ArrowRight />
+                    翻开这一章 <ArrowRight />
                   </Link>
                 </div>
               </div>
@@ -128,8 +129,10 @@ export default function HomePage() {
                 <em>{num}</em> — {formatDate(moment.momentDate)}
                 {moment.location ? ` · ${moment.location}` : ''}
               </div>
-              <figure className="chapter-figure mask-reveal">
-                <ParallaxImage src={moment.coverUrl || ''} alt="" />
+              <figure className="chapter-figure" data-reveal="fade">
+                <div className="figure-mask mask-reveal">
+                  <ParallaxImage src={moment.coverUrl || ''} alt="" />
+                </div>
               </figure>
               <div className="chapter-body">
                 <p className="kicker" data-reveal="fade">
@@ -149,7 +152,7 @@ export default function HomePage() {
                   </p>
                 ) : null}
                 <Link className="chapter-link" to={`/moments/${moment.slug}`} data-reveal style={{ '--rd': '240ms' } as CSSProperties}>
-                  阅读这一章 <ArrowRight />
+                  翻开这一章 <ArrowRight />
                 </Link>
               </div>
             </div>
@@ -161,10 +164,10 @@ export default function HomePage() {
         <section className="chapter">
           <p className="kicker">PROLOGUE</p>
           <h2 className="display-md" style={{ marginTop: 14 }}>
-            故事还没有开拍。
+            故事尚未落笔。
           </h2>
           <p className="chapter-excerpt" style={{ marginTop: 12 }}>
-            在后台写下第一条点滴，这里就会出现第一章。
+            写下第一条点滴，第一章便会从这里开始。
           </p>
         </section>
       ) : null}
@@ -180,19 +183,26 @@ export default function HomePage() {
             <small>AND COUNTING</small>
           </div>
           <p className="today-sub" data-reveal style={{ '--rd': '120ms' } as CSSProperties}>
-            始于 {formatDate(site.loveStartedAt)} · 故事仍在继续
+            自 {formatDate(site.loveStartedAt)} 起 · 余生长卷，仍在书写
           </p>
 
           <div className="today-grid">
             <div className="today-cell" data-reveal style={{ '--rd': '80ms' } as CSSProperties}>
-              <p className="meta">Together</p>
+              <p className="meta">初见至今</p>
+              <div className="value">
+                {metElapsed.days}
+                <em> 天 {String(metElapsed.hours).padStart(2, '0')}:{String(metElapsed.minutes).padStart(2, '0')}:{String(metElapsed.seconds).padStart(2, '0')}</em>
+              </div>
+            </div>
+            <div className="today-cell" data-reveal style={{ '--rd': '140ms' } as CSSProperties}>
+              <p className="meta">相伴至今</p>
               <div className="value">
                 {elapsed.days}
                 <em> 天 {String(elapsed.hours).padStart(2, '0')}:{String(elapsed.minutes).padStart(2, '0')}:{String(elapsed.seconds).padStart(2, '0')}</em>
               </div>
             </div>
-            <div className="today-cell" data-reveal style={{ '--rd': '160ms' } as CSSProperties}>
-              <p className="meta">Next Stop</p>
+            <div className="today-cell" data-reveal style={{ '--rd': '220ms' } as CSSProperties}>
+              <p className="meta">下一个日子</p>
               <div className="value">
                 {nextAnniversary ? (
                   <>
@@ -200,12 +210,12 @@ export default function HomePage() {
                     <em> · {nextAnniversary.daysUntil} 天后</em>
                   </>
                 ) : (
-                  <em>尚未标记</em>
+                  <em>尚未写下</em>
                 )}
               </div>
             </div>
-            <div className="today-cell" data-reveal style={{ '--rd': '240ms' } as CSSProperties}>
-              <p className="meta">Archive</p>
+            <div className="today-cell" data-reveal style={{ '--rd': '300ms' } as CSSProperties}>
+              <p className="meta">关于这段时光</p>
               <div className="value">
                 {data.counts.moments}
                 <em> 章 · {data.counts.anniversaries} 个纪念日</em>
@@ -214,8 +224,9 @@ export default function HomePage() {
           </div>
 
           <div className="today-links" data-reveal style={{ '--rd': '300ms' } as CSSProperties}>
-            <Link to="/anniversaries">查看纪念日</Link>
-            <Link to="/moments">翻阅档案</Link>
+            <Link to="/anniversaries">纪念日</Link>
+            <Link to="/gallery">相册</Link>
+            <Link to="/moments">点滴</Link>
           </div>
         </div>
       </section>

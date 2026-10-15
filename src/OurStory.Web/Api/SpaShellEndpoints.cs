@@ -89,6 +89,7 @@ public static class SpaShellEndpoints {
                         homeSentence = site.HomeSentence,
                         dailyNote = site.DailyNote,
                         loveStartedAt = site.LoveStartedAt,
+                        metStartedAt = site.MetStartedAt,
                         colorMode = site.ColorMode
                     },
                     me = new {

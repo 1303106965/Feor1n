@@ -19,7 +19,7 @@ public class SiteSettings {
     /// <summary>
     /// 获取或设置 SiteDescription
     /// </summary>
-    public string SiteDescription { get; set; } = "我们的恋爱存档";
+    public string SiteDescription { get; set; } = "两个名字，一段共同的时间。";
 
     /// <summary>
     /// 获取或设置 BoyName
@@ -44,25 +44,28 @@ public class SiteSettings {
     /// <summary>
     /// 获取或设置 BoySentence
     /// </summary>
-    public string BoySentence { get; set; } = "温柔又坚定地爱着你";
+    public string BoySentence { get; set; } = "他的四季，因她而有了秩序。";
 
     /// <summary>
     /// 获取或设置 GirlSentence
     /// </summary>
-    public string GirlSentence { get; set; } = "我的例外，也是我的偏爱";
+    public string GirlSentence { get; set; } = "她的远方，因他而不再遥远。";
 
     /// <summary>在一起的时刻，按站点时区理解。</summary>
     public DateTime LoveStartedAt { get; set; } = new(2024, 5, 20, 20, 0, 0, DateTimeKind.Unspecified);
 
+    /// <summary>两个人认识的那一天，按站点时区理解。</summary>
+    public DateTime MetStartedAt { get; set; } = new(2026, 9, 13, 0, 0, 0, DateTimeKind.Unspecified);
+
     /// <summary>
     /// 获取或设置 HomeSentence
     /// </summary>
-    public string HomeSentence { get; set; } = "日子慢慢过，故事慢慢写。这里珍藏着只属于我们的每一份心动。";
+    public string HomeSentence { get; set; } = "日子缓慢，我们慢慢写下。";
 
     /// <summary>
     /// 获取或设置 DailyNote
     /// </summary>
-    public string DailyNote { get; set; } = "想和你一起，把柴米油盐过成诗，\n把每一个普通的日子都写上我们的名字。";
+    public string DailyNote { get; set; } = "平常的日期，也需要被好好保存。\n时间落在地上，慢慢成为回音。";
 
     /// <summary>
     /// 获取或设置首页每次加载随机显示一句
@@ -144,18 +147,18 @@ public class SiteSettings {
     /// </summary>
     public static readonly IReadOnlyList<string> DefaultLoveLetters =
     [
-        "遇见你以后，连平凡的日子也开始闪闪发光。",
-        "我把所有温柔都存起来，只为见到你时全部给你。",
-        "人间有很多美好，而你是我最偏爱的那一种。",
-        "想和你把日子过成诗，也把岁月写成我们的名字。",
-        "喜欢你这件事，是我做过最笃定也最浪漫的决定。",
-        "你一出现，我心里的天气就自动变成晴天。",
-        "所谓心动，不过是你走近时，我的世界忽然有了回声。",
-        "我贪恋的人间烟火，恰好每一幕都有你。",
-        "比起永远，我更想把和你的每一个今天都认真收藏。",
-        "愿往后的朝朝暮暮，都能与你慢慢分享。",
-        "想念有声音的话，此刻一定全世界都听见了。",
-        "你是我绕过山河错落，才找到的人间值得。"
+        "风从远处来，停在这里。",
+        "时间落在地上，成为回音。",
+        "我们经过同一条河，见过不同的月亮。",
+        "许多年后，还会记得今天的天气。",
+        "话不必说完，天已经亮了。",
+        "灯亮着，路就还在。",
+        "世界安静下来的时候，能听见彼此。",
+        "日子如常，也有它的深意。",
+        "山没有动，是我们走过了山。",
+        "云停在窗前，像一句没有说出口的话。",
+        "来路很长，去路也长。",
+        "此刻，即是来日。"
     ];
 
     /// <summary>某个身份在页面上的称呼。</summary>
@@ -211,6 +214,10 @@ public static class SettingKeys {
     /// 表示 LoveStartedAt
     /// </summary>
     public const string LoveStartedAt = "couple.startedAt";
+    /// <summary>
+    /// 表示 MetStartedAt
+    /// </summary>
+    public const string MetStartedAt = "couple.metAt";
     /// <summary>
     /// 表示 HomeSentence
     /// </summary>

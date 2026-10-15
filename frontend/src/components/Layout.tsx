@@ -10,6 +10,7 @@ import { RevealRunner, useSmoothScroll, scrollToTop } from '../lib/motion';
 const navItems = [
   { to: '/', label: '首页', end: true },
   { to: '/moments', label: '点滴', end: false },
+  { to: '/gallery', label: '相册', end: false },
   { to: '/anniversaries', label: '纪念日', end: false },
 ];
 
@@ -115,6 +116,7 @@ export default function Layout() {
             <div className="footer-col">
               <p className="meta">Browse</p>
               <Link to="/moments">点滴档案</Link>
+              <Link to="/gallery">相册</Link>
               <Link to="/anniversaries">纪念日</Link>
               <Link to="/admin">管理后台</Link>
             </div>

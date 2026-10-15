@@ -10,6 +10,7 @@ export interface SiteInfo {
   homeSentence: string;
   dailyNote: string;
   loveStartedAt: string;
+  metStartedAt: string;
   colorMode: 'auto' | 'light' | 'dark';
 }
 
@@ -207,4 +208,20 @@ export interface AnniversaryDetailData {
   storyHtml: string;
   previous: { id: number; title: string; url: string } | null;
   next: { id: number; title: string; url: string } | null;
+}
+
+export interface GalleryPhoto {
+  src: string;
+  thumb: string;
+  caption: string | null;
+  momentId: number;
+  momentSlug: string;
+  momentTitle: string;
+  momentDate: string;
+  url: string;
+}
+
+export interface GalleryData {
+  total: number;
+  photos: GalleryPhoto[];
 }

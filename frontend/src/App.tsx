@@ -5,6 +5,7 @@ import MomentsPage from './pages/MomentsPage';
 import MomentDetailPage from './pages/MomentDetailPage';
 import AnniversariesPage from './pages/AnniversariesPage';
 import AnniversaryDetailPage from './pages/AnniversaryDetailPage';
+import GalleryPage from './pages/GalleryPage';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/moments/:slug" element={<MomentDetailPage />} />
         <Route path="/anniversaries" element={<AnniversariesPage />} />
         <Route path="/anniversaries/:id" element={<AnniversaryDetailPage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>

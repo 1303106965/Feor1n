@@ -143,6 +143,7 @@ app.MapCycleInsightEndpoints();
 app.MapSpaShellEndpoints();
 app.MapSpaMomentEndpoints();
 app.MapSpaAnniversaryEndpoints();
+app.MapSpaGalleryEndpoints();
 
 // 存活探针供容器与反向代理判断站点状态，仅检查数据库连接，
 // 不查询业务数据或渲染页面。

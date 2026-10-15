@@ -45,32 +45,32 @@ export default function AnniversariesPage() {
           纪念日
         </h1>
         <p className="page-head-sub" data-reveal style={{ '--rd': '160ms' } as CSSProperties}>
-          <span>一些日子经过以后，仍然值得被重新看见。</span>
+          <span>重要的日期，值得被重新看见。</span>
         </p>
       </header>
 
       <div className="anniv-stats">
         <div className="anniv-stat" data-reveal="fade">
-          <p className="meta">全部回忆</p>
+          <p className="meta">珍藏过的日子</p>
           <div className="stat-value">{stats.total}</div>
-          <div className="stat-extra">个被记住的日子</div>
+          <div className="stat-extra">段被记住的光阴</div>
         </div>
         <div className="anniv-stat" data-reveal="fade" style={{ '--rd': '80ms' } as CSSProperties}>
-          <p className="meta">私密收藏</p>
+          <p className="meta">只属于彼此</p>
           <div className="stat-value">{stats.privateCount}</div>
-          <div className="stat-extra">个被珍藏起来的日子</div>
+          <div className="stat-extra">个悄然收藏的日子</div>
         </div>
         <div className="anniv-stat" data-reveal="fade" style={{ '--rd': '160ms' } as CSSProperties}>
-          <p className="meta">下一次日子</p>
+          <p className="meta">下一次重逢</p>
           <div className="stat-value">
             {stats.next ? formatDate(stats.next.nextDate ?? stats.next.originalDate).slice(5) : '—'}
           </div>
-          <div className="stat-extra">{stats.next ? `距离还有 ${stats.next.daysUntil} 天` : '还没有安排'}</div>
+          <div className="stat-extra">{stats.next ? `距此还有 ${stats.next.daysUntil} 天` : '尚未写下'}</div>
         </div>
         <div className="anniv-stat" data-reveal="fade" style={{ '--rd': '240ms' } as CSSProperties}>
-          <p className="meta">年度提醒</p>
+          <p className="meta">岁岁相见</p>
           <div className="stat-value">{stats.yearly}</div>
-          <div className="stat-extra">个每年都会重逢的日期</div>
+          <div className="stat-extra">个每年都会重逢的日子</div>
         </div>
       </div>
 
@@ -374,7 +374,7 @@ function CalendarPanel() {
           </h4>
           {selectedCell.records.length === 0 ? (
             <p style={{ fontSize: 13, color: 'var(--muted)' }}>
-              这一天暂时没有纪念日，等我们一起写下新的故事。
+              这一天还很安静，留待以后写进故事。
             </p>
           ) : (
             selectedCell.records.map((record) => (

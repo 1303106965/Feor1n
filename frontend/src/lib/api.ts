@@ -5,6 +5,7 @@ import type {
   AnniversaryDetailData,
   BootstrapData,
   CalendarData,
+  GalleryData,
   HomeData,
   MomentDetailData,
   MomentsPageData,
@@ -113,5 +114,6 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ userName, password, rememberMe }),
     }),
+  gallery: () => request<GalleryData>('/api/gallery'),
   logout: () => request<{ ok: boolean }>('/api/auth/logout', { method: 'POST', body: '{}' }),
 };

@@ -48,7 +48,7 @@ export default function MomentsPage() {
         </h1>
         <div className="page-head-sub" data-reveal style={{ '--rd': '160ms' } as CSSProperties}>
           <span>{pageData.totalCount} 个瞬间</span>
-          <span>相恋第 {pageData.loveDays} 天</span>
+          <span>相伴第 {pageData.loveDays} 天</span>
           <span>始于 {startYear}</span>
         </div>
       </header>
@@ -86,10 +86,10 @@ export default function MomentsPage() {
           <div className="empty-state">
             <p className="kicker">EMPTY REEL</p>
             <p className="display-md" style={{ marginTop: 12 }}>
-              胶片还是空的。
+              胶卷尚未感光。
             </p>
             <p style={{ color: 'var(--muted)', fontSize: 13, marginTop: 8 }}>
-              在后台写下第一条点滴，档案就会开始生长。
+              写下第一页故事，这里便会慢慢长出时间的纹理。
             </p>
           </div>
         ) : null}

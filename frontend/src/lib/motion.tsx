@@ -34,14 +34,16 @@ export function useSmoothScroll() {
   }, []);
 }
 
-/** 路由变化后重新扫描并观察带 [data-reveal] / .mask-reveal / [data-reveal-img] 的元素 */
+/** 路由变化后重新扫描并观察带 [data-reveal] 的元素。
+ *  注意：被 clip-path 完全裁掉的元素（.mask-reveal）在 Chrome 里会被
+ *  IntersectionObserver 判为不可见，形成死锁——所以只观察不裁剪的
+ *  [data-reveal] 元素，元素进入视口后连同它内部的 .mask-reveal 与
+ *  img[data-reveal-img] 一起解锁。 */
 export function RevealRunner({ deps }: { deps: unknown[] }) {
   useEffect(() => {
     let observer: IntersectionObserver | null = null;
     const timer = window.setTimeout(() => {
-      const targets = document.querySelectorAll<HTMLElement>(
-        '[data-reveal]:not(.is-visible), .mask-reveal:not(.is-visible), img[data-reveal-img]:not(.is-visible)',
-      );
+      const targets = document.querySelectorAll<HTMLElement>('[data-reveal]:not(.is-visible)');
       if (targets.length === 0) return;
 
       observer = new IntersectionObserver(
@@ -49,6 +51,9 @@ export function RevealRunner({ deps }: { deps: unknown[] }) {
           for (const entry of entries) {
             if (entry.isIntersecting) {
               entry.target.classList.add('is-visible');
+              entry.target
+                .querySelectorAll<HTMLElement>('.mask-reveal, img[data-reveal-img]')
+                .forEach((child) => child.classList.add('is-visible'));
               observer?.unobserve(entry.target);
             }
           }

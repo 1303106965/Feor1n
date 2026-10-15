@@ -46,10 +46,10 @@ export default function MomentDetailPage() {
       if (result.ok) {
         await load();
       } else {
-        setUnlockError(result.error ?? '密码不正确。');
+        setUnlockError(result.error ?? '密语似乎不对。');
       }
     } catch (err) {
-      setUnlockError(err instanceof Error ? err.message : '网络开了个小差。');
+      setUnlockError(err instanceof Error ? err.message : '此刻风有些大，稍后再试。');
     } finally {
       setUnlocking(false);
     }
@@ -61,7 +61,7 @@ export default function MomentDetailPage() {
         <span className="ghost-num">404</span>
         <p className="kicker">LOST REEL</p>
         <p className="display-md" style={{ marginTop: 12 }}>
-          这一章暂时走丢了。
+          这一章散落在风里了。
         </p>
         <Link to="/moments" className="chapter-link" style={{ marginTop: 22 }}>
           回到档案
@@ -83,14 +83,14 @@ export default function MomentDetailPage() {
           <p className="kicker" style={{ textAlign: 'center' }}>
             PRIVATE CHAPTER
           </p>
-          <h1 style={{ marginTop: 10 }}>这是上锁的回忆</h1>
+          <h1 style={{ marginTop: 10 }}>这是一段被珍藏的回忆</h1>
           <p className="auth-hint" style={{ marginTop: 10 }}>
-            输入访问密码，才能打开这一页。
+            输入密语，才能推开这扇门。
           </p>
           {unlockError ? <div className="error-banner">{unlockError}</div> : null}
           <form onSubmit={unlock}>
             <label className="auth-field">
-              <span>访问密码</span>
+              <span>访问密语</span>
               <input
                 type="password"
                 value={unlockPassword}
@@ -99,7 +99,7 @@ export default function MomentDetailPage() {
               />
             </label>
             <button type="submit" className="auth-submit" disabled={unlocking}>
-              {unlocking ? '打开中' : '打开回忆'}
+              {unlocking ? '正在开启' : '开启这段回忆'}
             </button>
           </form>
         </div>
@@ -120,7 +120,7 @@ export default function MomentDetailPage() {
         <div className="article-head-meta" data-reveal style={{ '--rd': '160ms' } as CSSProperties}>
           {item.mood ? <span>{item.mood}</span> : null}
           {item.location ? <span>{item.location}</span> : null}
-          <span>由 {item.authorName} 记录</span>
+          <span>由 {item.authorName} 写就</span>
         </div>
       </header>
 
@@ -174,7 +174,7 @@ function Comments({
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!text.trim()) {
-      setError('留言内容不能为空。');
+      setError('留一句话再走吧。');
       return;
     }
     setSending(true);
@@ -191,10 +191,10 @@ function Comments({
         setReplyTo(null);
         onChanged();
       } else {
-        setError(result.error ?? '留言失败。');
+        setError(result.error ?? '这段话没有送达。');
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : '网络开了个小差。');
+      setError(err instanceof Error ? err.message : '此刻风有些大，稍后再试。');
     } finally {
       setSending(false);
     }
@@ -234,12 +234,12 @@ function Comments({
           <>
             <label className="auth-field">
               <span>称呼</span>
-              <input value={author} onChange={(event) => setAuthor(event.target.value)} placeholder="怎么称呼你" maxLength={60} />
+              <input value={author} onChange={(event) => setAuthor(event.target.value)} placeholder="如何称呼你" maxLength={60} />
             </label>
             {meta.requireMail ? (
               <label className="auth-field">
                 <span>邮箱</span>
-                <input type="email" value={mail} onChange={(event) => setMail(event.target.value)} placeholder="不会公开显示" maxLength={320} />
+              <input type="email" value={mail} onChange={(event) => setMail(event.target.value)} placeholder="只留给我们" maxLength={320} />
               </label>
             ) : null}
           </>
@@ -249,7 +249,7 @@ function Comments({
           </p>
         )}
         <label className="auth-field">
-          <span>写下想说的话</span>
+          <span>写下想对彼此说的话</span>
           <textarea
             value={text}
             onChange={(event) => setText(event.target.value)}
@@ -271,7 +271,7 @@ function Comments({
           />
         </label>
         <button type="submit" className="auth-submit" style={{ width: 'auto', padding: '12px 34px' }} disabled={sending}>
-          {sending ? '发送中' : '留下这条留言'}
+          {sending ? '正在送出' : '留下这段话'}
         </button>
       </form>
     </section>

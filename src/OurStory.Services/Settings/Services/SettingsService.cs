@@ -40,6 +40,7 @@ internal class SettingsService(OurStoryDbContext db, IMemoryCache cache) : ISett
             [SettingKeys.BoySentence] = settings.BoySentence,
             [SettingKeys.GirlSentence] = settings.GirlSentence,
             [SettingKeys.LoveStartedAt] = settings.LoveStartedAt.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture),
+            [SettingKeys.MetStartedAt] = settings.MetStartedAt.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture),
             [SettingKeys.HomeSentence] = settings.HomeSentence,
             [SettingKeys.DailyNote] = settings.DailyNote,
             [SettingKeys.LoveLetters] = JsonSerializer.Serialize(settings.LoveLetters),
@@ -119,6 +120,11 @@ internal class SettingsService(OurStoryDbContext db, IMemoryCache cache) : ISett
         if (raw.TryGetValue(SettingKeys.LoveStartedAt, out var startedAt)
             && DateTime.TryParse(startedAt, CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedStart)) {
             settings.LoveStartedAt = DateTime.SpecifyKind(parsedStart, DateTimeKind.Unspecified);
+        }
+
+        if (raw.TryGetValue(SettingKeys.MetStartedAt, out var metAt)
+            && DateTime.TryParse(metAt, CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedMet)) {
+            settings.MetStartedAt = DateTime.SpecifyKind(parsedMet, DateTimeKind.Unspecified);
         }
 
         settings.LoveLetters = ParseLoveLetters(raw);
