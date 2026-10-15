@@ -24,12 +24,12 @@ public class SiteSettings {
     /// <summary>
     /// 获取或设置 BoyName
     /// </summary>
-    public string BoyName { get; set; } = "男主名字";
+    public string BoyName { get; set; } = "Feor";
 
     /// <summary>
     /// 获取或设置 GirlName
     /// </summary>
-    public string GirlName { get; set; } = "女主名字";
+    public string GirlName { get; set; } = "R1n";
 
     /// <summary>
     /// 获取或设置 BoyAvatar
@@ -52,7 +52,7 @@ public class SiteSettings {
     public string GirlSentence { get; set; } = "她的远方，因他而不再遥远。";
 
     /// <summary>在一起的时刻，按站点时区理解。</summary>
-    public DateTime LoveStartedAt { get; set; } = new(2024, 5, 20, 20, 0, 0, DateTimeKind.Unspecified);
+    public DateTime LoveStartedAt { get; set; } = new(2026, 9, 24, 0, 0, 0, DateTimeKind.Unspecified);
 
     /// <summary>两个人认识的那一天，按站点时区理解。</summary>
     public DateTime MetStartedAt { get; set; } = new(2026, 9, 13, 0, 0, 0, DateTimeKind.Unspecified);
