@@ -99,7 +99,7 @@ sudo tee /srv/feor1n-data/ourstory.json > /dev/null <<'EOF'
     }
   },
   "Storage": {
-    "EnableImageOptimization": false
+    "EnableImageOptimization": true
   }
 }
 EOF
@@ -241,7 +241,7 @@ https://feor1n.com/login
 
 图片被文章、纪念日、商城、留言或设置引用时，后台删除会先提示引用关系，不会直接误删。
 
-当前配置已关闭图片压缩（`Storage.EnableImageOptimization=false`），页面会直接展示原图，不会自动生成 WebP 压缩版本。
+当前配置已开启图片优化（`Storage.EnableImageOptimization=true`）：列表、封面、相册网格使用轻量 WebP 预览图；点开灯箱或查看详情时仍加载原始图片，原图不会被覆盖或删除。
 
 完整备份：
 
@@ -255,6 +255,20 @@ sudo tar czf /srv/backups/feor1n-$(date +%F-%H%M).tgz -C /srv feor1n-data
 - 继续使用本地磁盘，只把备份文件同步到 COS；
 - 或将 `uploads/` 定期同步到 COS；
 - 或在现有 `IFileStorage` 架构上新增腾讯云 COS 驱动。
+
+## 8.1 图片较多时的加速建议
+
+如果未来图片数量较多，按下面顺序处理：
+
+1. 保持当前预览图机制：网格、列表、封面使用 WebP 预览图，原图只在灯箱中加载。
+2. 给静态资源配置 CDN：
+   - `/spa/assets/*`：缓存 30 天。
+   - `/media/*`：缓存 7 天。
+   - `/uploads/*`：按需缓存，通常 7 天。
+3. 在腾讯云 CDN 中设置回源地址为 `https://feor1n.com`，并缓存图片、JS、CSS、字体。
+4. 图片量大后，把 `/srv/feor1n-data/uploads` 同步到腾讯云 COS，再让 CDN 直接回源 COS。
+
+如果继续使用本机磁盘，建议把数据目录放在系统盘之外的数据盘上，并定期清理不再引用的原图。
 
 ## 9. 升级项目
 

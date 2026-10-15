@@ -119,14 +119,34 @@ app.UseStatusCodePagesWithReExecute("/error/{0}");
 var contentTypes = new FileExtensionContentTypeProvider();
 contentTypes.Mappings[".webmanifest"] = "application/manifest+json";
 
-app.UseStaticFiles(new StaticFileOptions { ContentTypeProvider = contentTypes });
+app.UseStaticFiles(new StaticFileOptions {
+    ContentTypeProvider = contentTypes,
+    OnPrepareResponse = context => {
+        var path = context.Context.Request.Path.Value ?? string.Empty;
+
+        // 带 hash 的前端产物可以永久缓存；图标和站点静态资源缓存一天。
+        if (path.StartsWith("/spa/assets/", StringComparison.OrdinalIgnoreCase)
+            || path.StartsWith("/assets/icons/", StringComparison.OrdinalIgnoreCase)) {
+            context.Context.Response.Headers.CacheControl = "public, max-age=31536000, immutable";
+            return;
+        }
+
+        if (path.StartsWith("/assets/", StringComparison.OrdinalIgnoreCase)
+            || path.Equals("/favicon.ico", StringComparison.OrdinalIgnoreCase)
+            || path.Equals("/manifest.webmanifest", StringComparison.OrdinalIgnoreCase)) {
+            context.Context.Response.Headers.CacheControl = "public, max-age=86400";
+        }
+    }
+});
 
 // 附件存放在数据目录中，使应用发布覆盖不会影响用户数据。
 var uploadsRoot = app.Services.GetRequiredService<StoragePaths>().UploadsRoot;
 app.UseStaticFiles(new StaticFileOptions {
     FileProvider = new PhysicalFileProvider(uploadsRoot),
     RequestPath = "/uploads",
-    ServeUnknownFileTypes = false
+    ServeUnknownFileTypes = false,
+    OnPrepareResponse = context =>
+        context.Context.Response.Headers.CacheControl = "public, max-age=604800"
 });
 
 app.UseRouting();

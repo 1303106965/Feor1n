@@ -61,7 +61,7 @@ export default function HomePage() {
       <section className="film-hero">
         {poster?.coverUrl ? (
           <div className="hero-media kenburns">
-            <img src={poster.coverUrl} alt="" />
+            <img src={poster.coverUrl} alt="" fetchPriority="high" decoding="async" />
           </div>
         ) : (
           <div className="hero-media" style={{ background: 'var(--black)' }} />
