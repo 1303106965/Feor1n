@@ -54,6 +54,10 @@ public sealed class MediaUrls(StoragePaths paths, ActiveConfiguration configurat
             return string.Empty;
         }
 
+        if (!configuration.Storage.EnableImageOptimization) {
+            return url;
+        }
+
         // 本地附件地址已包含公开路径，转换为媒体接口路径。
         if (url.StartsWith(_uploads, StringComparison.OrdinalIgnoreCase)) {
             return $"/media/{variant.Name}/{url[_uploads.Length..]}";

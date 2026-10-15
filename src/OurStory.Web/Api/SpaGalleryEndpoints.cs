@@ -48,7 +48,9 @@ public static partial class SpaGalleryEndpoints {
                     // 正文配图：alt 作为图注
                     foreach (Match match in ImageTags().Matches(moment.ContentHtml)) {
                         var source = WebUtility.HtmlDecode(Attribute(match.Value, "src"));
-                        if (source.Length == 0 || !media.CanResize(source) || !seen.Add(source)) {
+                        if (source.Length == 0
+                            || (media.LocalKey(source) is null && !media.CanResize(source))
+                            || !seen.Add(source)) {
                             continue;
                         }
 

@@ -97,6 +97,9 @@ sudo tee /srv/feor1n-data/ourstory.json > /dev/null <<'EOF'
       "GirlUserName": "girl",
       "GirlPassword": "0912"
     }
+  },
+  "Storage": {
+    "EnableImageOptimization": false
   }
 }
 EOF
@@ -237,6 +240,8 @@ https://feor1n.com/login
 ```
 
 图片被文章、纪念日、商城、留言或设置引用时，后台删除会先提示引用关系，不会直接误删。
+
+当前配置已关闭图片压缩（`Storage.EnableImageOptimization=false`），页面会直接展示原图，不会自动生成 WebP 压缩版本。
 
 完整备份：
 

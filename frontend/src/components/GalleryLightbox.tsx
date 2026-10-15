@@ -1,6 +1,6 @@
 // 相册灯箱：入场缩放、左右滑动切换、衬线图注、跳回章节入口。
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import type { GalleryPhoto } from '../lib/types';
@@ -14,20 +14,19 @@ interface GalleryLightboxProps {
 
 export default function GalleryLightbox({ photos, index, onClose, onIndex }: GalleryLightboxProps) {
   const navigate = useNavigate();
-  const [direction, setDirection] = useState<0 | 1 | -1>(0);
   const touchRef = useRef<{ x: number; y: number } | null>(null);
+  const tiltRef = useRef<HTMLDivElement>(null);
   const photo = photos[index];
 
   const go = useCallback(
-    (next: number, dir: 1 | -1) => {
-      setDirection(dir);
+    (next: number) => {
       onIndex((next + photos.length) % photos.length);
     },
     [photos.length, onIndex],
   );
 
-  const prev = useCallback(() => go(index - 1, -1), [go, index]);
-  const next = useCallback(() => go(index + 1, 1), [go, index]);
+  const prev = useCallback(() => go(index - 1), [go, index]);
+  const next = useCallback(() => go(index + 1), [go, index]);
 
   const onKeyDown = useCallback(
     (event: KeyboardEvent) => {
@@ -47,6 +46,35 @@ export default function GalleryLightbox({ photos, index, onClose, onIndex }: Gal
     };
   }, [onKeyDown]);
 
+  const resetTilt = useCallback(() => {
+    const el = tiltRef.current;
+    if (!el) return;
+    el.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) translate3d(0, 0, 0)';
+    el.style.setProperty('--glare-x', '50%');
+    el.style.setProperty('--glare-y', '32%');
+  }, []);
+
+  const onPointerMove = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const el = tiltRef.current;
+      if (!el) return;
+
+      const rect = event.currentTarget.getBoundingClientRect();
+      const px = (event.clientX - rect.left) / rect.width - 0.5;
+      const py = (event.clientY - rect.top) / rect.height - 0.5;
+
+      el.style.transform = `perspective(1200px) rotateX(${(-py * 7).toFixed(2)}deg) rotateY(${(px * 10).toFixed(2)}deg) translate3d(${(px * 9).toFixed(2)}px, ${(py * 9).toFixed(2)}px, 0)`;
+      el.style.setProperty('--glare-x', `${((px + 0.5) * 100).toFixed(2)}%`);
+      el.style.setProperty('--glare-y', `${((py + 0.5) * 100).toFixed(2)}%`);
+    },
+    [],
+  );
+
+  useEffect(() => {
+    resetTilt();
+  }, [index, resetTilt]);
+
   if (!photo) return null;
 
   const openChapter = () => {
@@ -61,6 +89,8 @@ export default function GalleryLightbox({ photos, index, onClose, onIndex }: Gal
       aria-modal="true"
       aria-label="相册查看器"
       onClick={onClose}
+      onPointerMove={onPointerMove}
+      onPointerLeave={resetTilt}
       onTouchStart={(event) => {
         touchRef.current = { x: event.touches[0].clientX, y: event.touches[0].clientY };
       }}
@@ -90,12 +120,16 @@ export default function GalleryLightbox({ photos, index, onClose, onIndex }: Gal
       ) : null}
 
       <div className="lightbox-stage" onClick={(event) => event.stopPropagation()}>
-        <img
-          key={photo.src + index}
-          className={`lightbox-img lightbox-img--${direction === 0 ? 'in' : direction > 0 ? 'next' : 'prev'}`}
-          src={photo.src}
-          alt={photo.caption ?? photo.momentTitle}
-        />
+        <div className="gallery-photo" key={photo.src + index}>
+          <div className="gallery-photo-tilt" ref={tiltRef}>
+            <div className="gallery-photo-sheen" aria-hidden="true" />
+            <img
+              className="gallery-photo-img"
+              src={photo.src}
+              alt={photo.caption ?? photo.momentTitle}
+            />
+          </div>
+        </div>
         <div className="lightbox-caption">
           {photo.caption ?? photo.momentTitle}
           <span className="lightbox-caption-sub">

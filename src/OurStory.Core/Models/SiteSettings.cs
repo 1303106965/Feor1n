@@ -19,7 +19,7 @@ public class SiteSettings {
     /// <summary>
     /// 获取或设置 SiteDescription
     /// </summary>
-    public string SiteDescription { get; set; } = "两个名字，一段共同的时间。";
+    public string SiteDescription { get; set; } = "[xxxx 文案]";
 
     /// <summary>
     /// 获取或设置 BoyName
@@ -44,12 +44,12 @@ public class SiteSettings {
     /// <summary>
     /// 获取或设置 BoySentence
     /// </summary>
-    public string BoySentence { get; set; } = "他的四季，因她而有了秩序。";
+    public string BoySentence { get; set; } = "[xxxx 文案]";
 
     /// <summary>
     /// 获取或设置 GirlSentence
     /// </summary>
-    public string GirlSentence { get; set; } = "她的远方，因他而不再遥远。";
+    public string GirlSentence { get; set; } = "[xxxx 文案]";
 
     /// <summary>在一起的时刻，按站点时区理解。</summary>
     public DateTime LoveStartedAt { get; set; } = new(2026, 9, 24, 0, 0, 0, DateTimeKind.Unspecified);
@@ -60,12 +60,12 @@ public class SiteSettings {
     /// <summary>
     /// 获取或设置 HomeSentence
     /// </summary>
-    public string HomeSentence { get; set; } = "日子缓慢，我们慢慢写下。";
+    public string HomeSentence { get; set; } = "[xxxx 文案]";
 
     /// <summary>
     /// 获取或设置 DailyNote
     /// </summary>
-    public string DailyNote { get; set; } = "平常的日期，也需要被好好保存。\n时间落在地上，慢慢成为回音。";
+    public string DailyNote { get; set; } = "[xxxx 文案]";
 
     /// <summary>
     /// 获取或设置首页每次加载随机显示一句
@@ -147,18 +147,7 @@ public class SiteSettings {
     /// </summary>
     public static readonly IReadOnlyList<string> DefaultLoveLetters =
     [
-        "风从远处来，停在这里。",
-        "时间落在地上，成为回音。",
-        "我们经过同一条河，见过不同的月亮。",
-        "许多年后，还会记得今天的天气。",
-        "话不必说完，天已经亮了。",
-        "灯亮着，路就还在。",
-        "世界安静下来的时候，能听见彼此。",
-        "日子如常，也有它的深意。",
-        "山没有动，是我们走过了山。",
-        "云停在窗前，像一句没有说出口的话。",
-        "来路很长，去路也长。",
-        "此刻，即是来日。"
+        "[xxxx 文案]"
     ];
 
     /// <summary>某个身份在页面上的称呼。</summary>

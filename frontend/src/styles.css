@@ -2078,6 +2078,88 @@ img[data-reveal-img].is-visible {
   max-width: 92vw;
 }
 
+.gallery-photo {
+  perspective: 1200px;
+  animation: gallery-photo-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.gallery-photo-tilt {
+  position: relative;
+  transform-style: preserve-3d;
+  padding: clamp(9px, 1.4vw, 16px) clamp(9px, 1.4vw, 16px) clamp(26px, 3.6vw, 42px);
+  background: linear-gradient(145deg, #ffffff 0%, #f0ebe5 48%, #e7e1da 100%);
+  border-radius: 3px;
+  box-shadow:
+    0 38px 80px rgba(0, 0, 0, 0.46),
+    0 6px 18px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  transition: transform 0.18s ease-out, box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.gallery-photo-tilt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 3px;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.6), transparent 32%, rgba(255, 255, 255, 0.12) 68%);
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+}
+
+.gallery-photo-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 3px;
+  background: radial-gradient(circle at var(--glare-x, 50%) var(--glare-y, 32%), rgba(255, 255, 255, 0.72), transparent 42%);
+  opacity: 0.22;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.gallery-photo-img {
+  position: relative;
+  z-index: 0;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(78vw, 940px);
+  max-height: 66dvh;
+  object-fit: contain;
+  border-radius: 1px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.22);
+  user-select: none;
+}
+
+@media (max-width: 860px) {
+  .gallery-photo-img {
+    max-width: 90vw;
+    max-height: 62dvh;
+  }
+
+  .gallery-photo-tilt {
+    padding: 7px 7px 22px;
+  }
+}
+
+@keyframes gallery-photo-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0) rotateX(5deg) rotateY(-7deg) scale(0.94);
+    filter: blur(2px);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(0, -4px, 0) rotateX(-1.4deg) rotateY(1.6deg) scale(1.01);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1);
+  }
+}
+
 .lightbox-img {
   max-width: 92vw;
   max-height: 72dvh;
@@ -2158,6 +2240,14 @@ img[data-reveal-img].is-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .gallery-photo {
+    animation: none;
+  }
+
+  .gallery-photo-tilt {
+    transition: none;
+  }
+
   .lightbox-img--in,
   .lightbox-img--next,
   .lightbox-img--prev {

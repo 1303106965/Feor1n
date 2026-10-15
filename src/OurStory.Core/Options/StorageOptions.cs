@@ -28,6 +28,11 @@ public class StorageOptions {
     public string Prefix { get; set; } = "ourstory/public";
 
     /// <summary>
+    /// 获取或设置是否允许生成压缩派生图；关闭后页面直接使用原图。
+    /// </summary>
+    public bool EnableImageOptimization { get; set; } = true;
+
+    /// <summary>
     /// 获取或设置单个附件的大小上限（字节）
     /// </summary>
     public long MaxFileSize { get; set; } = 20 * 1024 * 1024;
