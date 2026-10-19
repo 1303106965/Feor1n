@@ -129,11 +129,9 @@ export const api = {
     }),
   deleteAlbum: (id: number) =>
     request<{ ok: boolean; error?: string }>(`/api/gallery/albums/${id}`, { method: 'DELETE' }),
-  uploadPhotos: (id: number, files: File[]) => {
+  uploadPhoto: (id: number, file: File) => {
     const form = new FormData();
-    for (const file of files) {
-      form.append('files', file);
-    }
+    form.append('file', file);
     return request<{ ok: boolean; count?: number; error?: string }>(`/api/gallery/albums/${id}/photos`, {
       method: 'POST',
       body: form,

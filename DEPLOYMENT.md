@@ -157,6 +157,10 @@ server {
     listen [::]:80;
     server_name feor1n.com www.feor1n.com;
 
+    # 上传照片走 multipart，放行到单文件上限 20MB 再留点余量；
+    # Nginx 默认只放 1MB，不配这一行相册上传会被 413 拦下。
+    client_max_body_size 30m;
+
     location / {
         proxy_pass http://127.0.0.1:8080;
         proxy_http_version 1.1;

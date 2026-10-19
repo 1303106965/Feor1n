@@ -18,7 +18,7 @@ export default function AlbumPage() {
   const [missing, setMissing] = useState(false);
   const [viewer, setViewer] = useState<{ index: number } | null>(null);
   const [editing, setEditing] = useState(false);
-  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<{ done: number; total: number } | null>(null);
   const uploadRef = useRef<HTMLInputElement>(null);
 
   const albumId = Number(id);
@@ -80,17 +80,24 @@ export default function AlbumPage() {
     : null;
 
   const onUpload = async (files: FileList | null) => {
-    if (!files || files.length === 0) return;
-    setUploading(true);
-    try {
-      await api.uploadPhotos(album.id, Array.from(files));
-      load();
-    } catch (error) {
-      alert(error instanceof Error ? error.message : '上传失败，稍后再试。');
-    } finally {
-      setUploading(false);
-      if (uploadRef.current) uploadRef.current.value = '';
+    const list = Array.from(files ?? []);
+    if (list.length === 0) return;
+    setUploadProgress({ done: 0, total: list.length });
+    const failures: string[] = [];
+    for (const file of list) {
+      try {
+        await api.uploadPhoto(album.id, file);
+      } catch (error) {
+        failures.push(`${file.name}：${error instanceof Error ? error.message : '上传失败'}`);
+      }
+      setUploadProgress((prev) => (prev ? { ...prev, done: prev.done + 1 } : prev));
     }
+    if (failures.length > 0) {
+      alert(`有 ${failures.length} 张上传失败：\n${failures.join('\n')}`);
+    }
+    setUploadProgress(null);
+    if (uploadRef.current) uploadRef.current.value = '';
+    load();
   };
 
   const onRename = async (event: FormEvent<HTMLFormElement>) => {
@@ -159,8 +166,8 @@ export default function AlbumPage() {
         )}
         {isOwner && !editing ? (
           <div className="album-toolbar" data-reveal style={{ '--rd': '220ms' } as CSSProperties}>
-            <button type="button" className="album-upload" disabled={uploading} onClick={() => uploadRef.current?.click()}>
-              <ImagePlus /> {uploading ? '上传中…' : '上传照片'}
+            <button type="button" className="album-upload" disabled={uploadProgress !== null} onClick={() => uploadRef.current?.click()}>
+              <ImagePlus /> {uploadProgress ? `上传中 ${uploadProgress.done}/${uploadProgress.total}` : '上传照片'}
             </button>
             <button type="button" className="album-tool" aria-label="编辑相册信息" onClick={() => setEditing(true)}>
               <Pencil />

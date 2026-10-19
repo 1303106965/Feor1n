@@ -4,6 +4,7 @@
 
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,16 @@ var builder = WebApplication.CreateBuilder(MaintenanceCommand.StripFrom(args));
 // 站点配置统一读取数据目录下的 ourstory.json。
 var store = ConfigurationStore.Create(builder.Environment.ContentRootPath);
 var loaded = store.Load();
+
+// 上传走 multipart，整包体积跟着「单文件上限」放宽；
+// Kestrel 默认 30MB，一次选几张照片就会被 413 拦在门外。
+var uploadLimit = Math.Max(30L * 1024 * 1024, loaded.Configuration.Storage.MaxFileSize * 2);
+builder.WebHost.ConfigureKestrel(options => {
+    options.Limits.MaxRequestBodySize = uploadLimit;
+});
+builder.Services.Configure<FormOptions>(options => {
+    options.MultipartBodyLengthLimit = uploadLimit;
+});
 
 // 日志级别使用代码中的默认配置
 builder.Logging.AddFilter(
