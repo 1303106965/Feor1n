@@ -6,6 +6,7 @@ import MomentDetailPage from './pages/MomentDetailPage';
 import AnniversariesPage from './pages/AnniversariesPage';
 import AnniversaryDetailPage from './pages/AnniversaryDetailPage';
 import GalleryPage from './pages/GalleryPage';
+import AlbumPage from './pages/AlbumPage';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/anniversaries" element={<AnniversariesPage />} />
         <Route path="/anniversaries/:id" element={<AnniversaryDetailPage />} />
         <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/gallery/:id" element={<AlbumPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>

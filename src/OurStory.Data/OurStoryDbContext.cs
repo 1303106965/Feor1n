@@ -40,6 +40,16 @@ public class OurStoryDbContext(DbContextOptions<OurStoryDbContext> options) : Db
     public DbSet<Moment> Moments => Set<Moment>();
 
     /// <summary>
+    /// 获取相册数据集合
+    /// </summary>
+    public DbSet<PhotoAlbum> PhotoAlbums => Set<PhotoAlbum>();
+
+    /// <summary>
+    /// 获取相册照片数据集合
+    /// </summary>
+    public DbSet<AlbumPhoto> AlbumPhotos => Set<AlbumPhoto>();
+
+    /// <summary>
     /// 获取纪念日数据集合
     /// </summary>
     public DbSet<Anniversary> Anniversaries => Set<Anniversary>();

@@ -38,34 +38,48 @@ export function useSmoothScroll() {
  *  注意：被 clip-path 完全裁掉的元素（.mask-reveal）在 Chrome 里会被
  *  IntersectionObserver 判为不可见，形成死锁——所以只观察不裁剪的
  *  [data-reveal] 元素，元素进入视口后连同它内部的 .mask-reveal 与
- *  img[data-reveal-img] 一起解锁。 */
+ *  img[data-reveal-img] 一起解锁。
+ *  页面内容大多是异步取数后才挂载的，单次定时扫描会与加载竞态，
+ *  因此挂一个 MutationObserver，新增的 reveal 元素随时补观察。 */
 export function RevealRunner({ deps }: { deps: unknown[] }) {
   useEffect(() => {
-    let observer: IntersectionObserver | null = null;
-    const timer = window.setTimeout(() => {
-      const targets = document.querySelectorAll<HTMLElement>('[data-reveal]:not(.is-visible)');
-      if (targets.length === 0) return;
-
-      observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              entry.target
-                .querySelectorAll<HTMLElement>('.mask-reveal, img[data-reveal-img]')
-                .forEach((child) => child.classList.add('is-visible'));
-              observer?.unobserve(entry.target);
-            }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            entry.target
+              .querySelectorAll<HTMLElement>('.mask-reveal, img[data-reveal-img]')
+              .forEach((child) => child.classList.add('is-visible'));
+            observer.unobserve(entry.target);
           }
-        },
-        { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
-      );
-      targets.forEach((target) => observer?.observe(target));
-    }, 80);
+        }
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    );
+
+    const observeAdded = (node: Node) => {
+      if (!(node instanceof HTMLElement)) return;
+      if (node.matches('[data-reveal]:not(.is-visible)')) {
+        observer.observe(node);
+      }
+      node.querySelectorAll<HTMLElement>('[data-reveal]:not(.is-visible)')
+        .forEach((child) => observer.observe(child));
+    };
+
+    document.querySelectorAll<HTMLElement>('[data-reveal]:not(.is-visible)')
+      .forEach((target) => observer.observe(target));
+
+    const mutation = new MutationObserver((records) => {
+      for (const record of records) {
+        record.addedNodes.forEach(observeAdded);
+      }
+    });
+    mutation.observe(document.body, { childList: true, subtree: true });
 
     return () => {
-      window.clearTimeout(timer);
       observer?.disconnect();
+      mutation?.disconnect();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);

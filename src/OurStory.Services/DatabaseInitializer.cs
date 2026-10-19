@@ -69,6 +69,11 @@ public class DatabaseInitializer(
     public const string AffinityQuestionsVersionKey = "affinity.questionsPresetVersion";
 
     /// <summary>
+    /// 获取相册示例数据初始化时间配置键；存在该值时不重复写入示例相册
+    /// </summary>
+    public const string GallerySamplesSeededKey = "gallery.samplesSeededAt";
+
+    /// <summary>
     /// 初始化数据库数据
     /// </summary>
     /// <param name="cancellationToken">获取取消令牌</param>
@@ -83,6 +88,7 @@ public class DatabaseInitializer(
         await EnsureShopPresetsAsync(cancellationToken);
         await EnsureAffinityQuestionsAsync(cancellationToken);
         await EnsureHeartPointsAsync(cancellationToken);
+        await EnsureGalleryAlbumsAsync(cancellationToken);
 
         return seeded;
     }
@@ -146,6 +152,60 @@ public class DatabaseInitializer(
                 DefaultAffinityQuestions.CurrentVersion,
                 addedCount);
         }
+    }
+
+    private async Task EnsureGalleryAlbumsAsync(CancellationToken cancellationToken) {
+        var seeded = await settings.GetRawAsync(GallerySamplesSeededKey, cancellationToken);
+        if (!string.IsNullOrEmpty(seeded)) {
+            return;
+        }
+
+        var baseTime = DateTimeOffset.UtcNow;
+
+        // 示例照片都是站内静态图，仅用于展示相册效果；用户可自由改名或删除
+        AlbumPhoto Photo(string url, string caption, int daysAgo) => new() {
+            Url = url,
+            Caption = caption,
+            UploadedAt = baseTime.AddDays(-daysAgo)
+        };
+
+        db.PhotoAlbums.AddRange(
+            new PhotoAlbum {
+                Title = "旅行随笔",
+                Description = "走过的路，看过的海。",
+                SortOrder = 1,
+                Photos = [
+                    Photo("/gallery-samples/sample-01.svg", "山间日落", 420),
+                    Photo("/gallery-samples/sample-02.svg", "海风很轻", 388),
+                    Photo("/gallery-samples/sample-07.svg", "沙丘与风", 340),
+                    Photo("/gallery-samples/sample-11.svg", "雨天车窗", 120)
+                ]
+            },
+            new PhotoAlbum {
+                Title = "四季光影",
+                Description = "春樱、夏夜、秋叶、冬雪。",
+                SortOrder = 2,
+                Photos = [
+                    Photo("/gallery-samples/sample-09.svg", "四月樱花", 560),
+                    Photo("/gallery-samples/sample-05.svg", "六月林间", 480),
+                    Photo("/gallery-samples/sample-04.svg", "十月银杏", 370),
+                    Photo("/gallery-samples/sample-10.svg", "十二月落雪", 300)
+                ]
+            },
+            new PhotoAlbum {
+                Title = "日常碎片",
+                Description = "不需要理由的随手一拍。",
+                SortOrder = 3,
+                Photos = [
+                    Photo("/gallery-samples/sample-03.svg", "回家的路口", 90),
+                    Photo("/gallery-samples/sample-06.svg", "下午的咖啡", 60),
+                    Photo("/gallery-samples/sample-12.svg", "薰衣草田", 30),
+                    Photo("/gallery-samples/sample-08.svg", "极光之夜", 3)
+                ]
+            });
+        _ = await db.SaveChangesAsync(cancellationToken);
+
+        await settings.SetRawAsync(GallerySamplesSeededKey, baseTime.ToString("O", CultureInfo.InvariantCulture), cancellationToken);
     }
 
     private async Task EnsureShopPresetsAsync(CancellationToken cancellationToken) {

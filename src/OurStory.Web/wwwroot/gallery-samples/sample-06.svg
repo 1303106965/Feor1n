@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <defs>
+    <linearGradient id="cafe" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e8d9c8"/>
+      <stop offset="1" stop-color="#b99a7e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#cafe)"/>
+  <ellipse cx="600" cy="620" rx="360" ry="90" fill="#8f7360" opacity=".5"/>
+  <path d="M420 320 Q600 260 780 320 L780 560 Q600 620 420 560 Z" fill="#fdf8f2"/>
+  <ellipse cx="600" cy="560" rx="180" ry="46" fill="#f3e6d8"/>
+  <ellipse cx="600" cy="540" rx="150" ry="36" fill="#6b4a32"/>
+  <path d="M780 340 Q850 320 840 400 Q832 460 780 470" stroke="#8f7360" stroke-width="18" fill="none" stroke-linecap="round" opacity=".75"/>
+  <ellipse cx="600" cy="700" rx="280" ry="40" fill="#7a5f4d" opacity=".55"/>
+</svg>

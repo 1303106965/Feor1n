@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <defs>
+    <linearGradient id="autumn" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4d8a8"/>
+      <stop offset="1" stop-color="#d99a6c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#autumn)"/>
+  <rect x="150" y="380" width="90" height="420" fill="#8a5a3b"/>
+  <rect x="880" y="300" width="110" height="500" fill="#7a4d33"/>
+  <circle cx="195" cy="330" r="150" fill="#e0a458" opacity=".85"/>
+  <circle cx="935" cy="240" r="180" fill="#c98a4b" opacity=".85"/>
+  <circle cx="520" cy="420" r="110" fill="#eda96b" opacity=".7"/>
+  <ellipse cx="600" cy="840" rx="700" ry="90" fill="#a06a42" opacity=".6"/>
+  <circle cx="360" cy="740" r="16" fill="#c98a4b"/>
+  <circle cx="700" cy="800" r="20" fill="#b5794a"/>
+  <circle cx="1050" cy="760" r="14" fill="#c98a4b"/>
+</svg>

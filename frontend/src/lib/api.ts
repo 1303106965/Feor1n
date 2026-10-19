@@ -5,7 +5,8 @@ import type {
   AnniversaryDetailData,
   BootstrapData,
   CalendarData,
-  GalleryData,
+  AlbumDetailData,
+  AlbumListData,
   HomeData,
   MomentDetailData,
   MomentsPageData,
@@ -31,7 +32,7 @@ export class ApiError extends Error {
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const headers = new Headers(init?.headers);
-  if (init?.body && !(init.body instanceof URLSearchParams)) {
+  if (init?.body && !(init.body instanceof URLSearchParams) && !(init.body instanceof FormData)) {
     headers.set('Content-Type', 'application/json');
   }
   if (init?.method && init.method !== 'GET' && antiforgeryToken) {
@@ -114,6 +115,33 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ userName, password, rememberMe }),
     }),
-  gallery: () => request<GalleryData>('/api/gallery'),
+  albums: () => request<AlbumListData>('/api/gallery/albums'),
+  album: (id: number) => request<AlbumDetailData>(`/api/gallery/albums/${id}`),
+  createAlbum: (body: { title: string; description?: string }) =>
+    request<{ ok: boolean; id?: number; error?: string }>('/api/gallery/albums', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
+  updateAlbum: (id: number, body: { title: string; description?: string }) =>
+    request<{ ok: boolean; error?: string }>(`/api/gallery/albums/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(body),
+    }),
+  deleteAlbum: (id: number) =>
+    request<{ ok: boolean; error?: string }>(`/api/gallery/albums/${id}`, { method: 'DELETE' }),
+  uploadPhotos: (id: number, files: File[]) => {
+    const form = new FormData();
+    for (const file of files) {
+      form.append('files', file);
+    }
+    return request<{ ok: boolean; count?: number; error?: string }>(`/api/gallery/albums/${id}/photos`, {
+      method: 'POST',
+      body: form,
+    });
+  },
+  deletePhoto: (albumId: number, photoId: number) =>
+    request<{ ok: boolean; error?: string }>(`/api/gallery/albums/${albumId}/photos/${photoId}`, {
+      method: 'DELETE',
+    }),
   logout: () => request<{ ok: boolean }>('/api/auth/logout', { method: 'POST', body: '{}' }),
 };

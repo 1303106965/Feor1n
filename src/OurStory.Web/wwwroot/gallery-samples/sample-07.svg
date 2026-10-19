@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200">
+  <defs>
+    <linearGradient id="dune" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7e2c4"/>
+      <stop offset="1" stop-color="#e0a878"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1200" fill="url(#dune)"/>
+  <circle cx="450" cy="360" r="130" fill="#fff4e2" opacity=".9"/>
+  <path d="M0 720 Q450 560 900 720 L900 1200 L0 1200 Z" fill="#d99a66" opacity=".8"/>
+  <path d="M0 900 Q450 760 900 920 L900 1200 L0 1200 Z" fill="#c07f52" opacity=".9"/>
+  <path d="M0 1060 Q450 960 900 1080 L900 1200 L0 1200 Z" fill="#a5663f"/>
+  <path d="M600 1000 Q640 940 700 930" stroke="#8f5636" stroke-width="8" fill="none" stroke-linecap="round" opacity=".6"/>
+</svg>

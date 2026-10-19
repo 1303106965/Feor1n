@@ -1,0 +1,25 @@
+@page "/enter"
+@model EnterModel
+@{
+    Layout = "_AuthLayout";
+    ViewData["Title"] = "站点入口";
+}
+<main class="auth-card" id="main">
+    <span class="auth-mark">@Icon("lock")</span>
+    <p class="auth-eyebrow">PRIVATE ACCESS</p>
+    <h1>站点入口</h1>
+    <p class="auth-hint">这是一座只属于两个人的小站，<br>请输入入口口令继续。</p>
+
+    @if (!string.IsNullOrEmpty(Model.Error)) {
+        <div class="auth-error">@Icon("circle-alert")@Model.Error</div>
+    }
+
+    <form method="post">
+        <input type="hidden" asp-for="ReturnUrl" />
+        <label>
+            <span>口令</span>
+            <input type="password" asp-for="Code" autocomplete="off" autofocus required />
+        </label>
+        <button type="submit">进入</button>
+    </form>
+</main>

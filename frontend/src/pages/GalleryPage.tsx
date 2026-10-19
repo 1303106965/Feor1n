@@ -1,18 +1,22 @@
-// 相册：编辑式马赛克。按年份分组，错落网格 + 遮罩渐入，点击进入全屏灯箱。
+// 相册墙：独立相册体系。每本相册一张封面，点进去是按上传日期分组的大画廊。
 
-import { useEffect, useMemo, useState } from 'react';
-import type { CSSProperties } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import type { CSSProperties, FormEvent } from 'react';
+import { Link } from 'react-router-dom';
+import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { api } from '../lib/api';
-import type { GalleryData, GalleryPhoto } from '../lib/types';
-import GalleryLightbox from '../components/GalleryLightbox';
+import { useBootstrap } from '../context/BootstrapContext';
+import type { AlbumCard } from '../lib/types';
 
-// 桌面 12 列、移动 2 列的错落跨列节奏（每 3 张一组）
 const DESKTOP_SPANS = [5, 4, 3];
 const MOBILE_SPANS = [2, 1, 1];
 
 export default function GalleryPage() {
-  const [data, setData] = useState<GalleryData | null>(null);
-  const [viewer, setViewer] = useState<{ photos: GalleryPhoto[]; index: number } | null>(null);
+  const { data: bootstrap } = useBootstrap();
+  const isOwner = bootstrap?.me.isOwner ?? false;
+  const [data, setData] = useState<{ total: number; albums: AlbumCard[] } | null>(null);
+  const [creating, setCreating] = useState(false);
+  const [editing, setEditing] = useState<AlbumCard | null>(null);
   const [compact, setCompact] = useState(() => window.matchMedia('(max-width: 860px)').matches);
 
   useEffect(() => {
@@ -22,27 +26,60 @@ export default function GalleryPage() {
     return () => media.removeEventListener('change', onChange);
   }, []);
 
-  useEffect(() => {
-    void api.gallery().then(setData).catch(() => setData({ total: 0, photos: [] }));
+  const load = useCallback(() => {
+    void api.albums().then(setData).catch(() => setData({ total: 0, albums: [] }));
   }, []);
 
-  const years = useMemo(() => {
-    const buckets = new Map<string, GalleryPhoto[]>();
-    for (const photo of data?.photos ?? []) {
-      const year = photo.momentDate.slice(0, 4);
-      const bucket = buckets.get(year) ?? [];
-      bucket.push(photo);
-      buckets.set(year, bucket);
+  useEffect(() => {
+    load();
+  }, [load]);
+
+  const onCreate = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const title = String(formData.get('title') ?? '').trim();
+    if (!title) return;
+    try {
+      await api.createAlbum({ title, description: String(formData.get('description') ?? '').trim() || undefined });
+      form.reset();
+      setCreating(false);
+      load();
+    } catch (error) {
+      alert(error instanceof Error ? error.message : '创建失败，稍后再试。');
     }
-    return Array.from(buckets.entries()).sort(([a], [b]) => a.localeCompare(b));
-  }, [data]);
+  };
+
+  const onUpdate = async (album: AlbumCard, event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const title = String(formData.get('title') ?? '').trim();
+    if (!title) return;
+    try {
+      await api.updateAlbum(album.id, {
+        title,
+        description: String(formData.get('description') ?? '').trim() || undefined,
+      });
+      setEditing(null);
+      load();
+    } catch (error) {
+      alert(error instanceof Error ? error.message : '保存失败，稍后再试。');
+    }
+  };
+
+  const onDelete = async (album: AlbumCard) => {
+    if (!window.confirm(`删除相册「${album.title}」？里面的 ${album.photoCount} 张照片会一并移除。`)) return;
+    try {
+      await api.deleteAlbum(album.id);
+      load();
+    } catch (error) {
+      alert(error instanceof Error ? error.message : '删除失败，稍后再试。');
+    }
+  };
 
   if (!data) {
     return <div className="spinner" />;
   }
-
-  const chapters = new Set(data.photos.map((photo) => photo.momentSlug)).size;
-  const allPhotos = data.photos;
 
   return (
     <>
@@ -54,78 +91,85 @@ export default function GalleryPage() {
           相册
         </h1>
         <div className="page-head-sub" data-reveal style={{ '--rd': '160ms' } as CSSProperties}>
+          <span>{data.albums.length} 本相册</span>
           <span>{data.total} 帧光影</span>
-          <span>出自 {chapters} 个章节</span>
         </div>
       </header>
 
-      <div className="gallery-wrap">
-        {allPhotos.length === 0 ? (
-          <div className="empty-state" style={{ minHeight: 320 }}>
-            <p className="kicker">EMPTY ALBUM</p>
-            <p className="display-md" style={{ marginTop: 12 }}>
-              影集还是一片留白。
-            </p>
-            <p style={{ color: 'var(--muted)', fontSize: 13, marginTop: 8 }}>
-              把带照片的故事写进「点滴」，光影自会在此聚拢。
-            </p>
-          </div>
-        ) : (
-          years.map(([year, photos]) => (
-            <section key={year} className="gallery-year">
-              <div className="gallery-year-head" data-reveal="fade">
-                <span className="year-num">{year}</span>
-                <span className="rule" style={{ flex: 1 }} />
-                <span className="meta">{photos.length} PHOTOS</span>
-              </div>
-              <div className="gallery-grid">
-                {photos.map((photo, index) => {
-                  const globalIndex = allPhotos.indexOf(photo);
-                  const span = compact
-                    ? MOBILE_SPANS[index % MOBILE_SPANS.length]
-                    : DESKTOP_SPANS[index % DESKTOP_SPANS.length];
-                  return (
-                    <div
-                      key={`${photo.momentSlug}-${index}`}
-                      className="gallery-cell-wrap"
-                      data-reveal="fade"
-                      style={{
-                        gridColumn: `span ${span}`,
-                        '--rd': `${(index % 3) * 90}ms`,
-                      } as CSSProperties}
-                    >
-                      <button
-                        type="button"
-                        className="gallery-cell mask-reveal"
-                        onClick={() => setViewer({ photos: allPhotos, index: globalIndex })}
-                        aria-label={`查看照片：${photo.caption ?? photo.momentTitle}`}
-                      >
-                        <img src={photo.thumb} alt={photo.caption ?? photo.momentTitle} loading="lazy" decoding="async" />
-                        <span className="g-index">N°{String(globalIndex + 1).padStart(2, '0')}</span>
-                        <span className="gallery-overlay">
-                          {photo.caption ? <span className="g-cap">{photo.caption}</span> : null}
-                          <span className="g-meta">
-                            {photo.momentDate} · {photo.momentTitle}
-                          </span>
-                        </span>
-                      </button>
+      <div className="album-wall">
+        <div className="album-grid">
+          {data.albums.map((album, index) => {
+            const span = compact
+              ? MOBILE_SPANS[index % MOBILE_SPANS.length]
+              : DESKTOP_SPANS[index % DESKTOP_SPANS.length];
+            return (
+              <div
+                key={album.id}
+                className="album-cell-wrap"
+                data-reveal="fade"
+                style={{ gridColumn: `span ${span}`, '--rd': `${(index % 3) * 90}ms` } as CSSProperties}
+              >
+                {editing?.id === album.id ? (
+                  <form className="album-form" onSubmit={(event) => void onUpdate(album, event)}>
+                    <input name="title" defaultValue={album.title} maxLength={60} required aria-label="相册名称" />
+                    <input name="description" defaultValue={album.description ?? ''} maxLength={200} placeholder="一句话描述（可选）" aria-label="相册描述" />
+                    <div className="album-form-actions">
+                      <button type="submit">保存</button>
+                      <button type="button" onClick={() => setEditing(null)}>取消</button>
                     </div>
-                  );
-                })}
+                  </form>
+                ) : (
+                  <div className="album-cell">
+                    <Link to={`/gallery/${album.id}`} className="album-cover" aria-label={`打开相册：${album.title}`}>
+                      {album.cover ? (
+                        <img src={album.cover} alt={album.title} loading="lazy" decoding="async" />
+                      ) : (
+                        <span className="album-cover-empty" aria-hidden="true" />
+                      )}
+                      <span className="album-overlay">
+                        <span className="album-title">{album.title}</span>
+                        <span className="album-meta">
+                          {album.photoCount} 张{album.latestUpload ? ` · 最近 ${album.latestUpload}` : ''}
+                        </span>
+                      </span>
+                    </Link>
+                    {album.description ? <p className="album-desc">{album.description}</p> : null}
+                    {isOwner ? (
+                      <span className="album-tools">
+                        <button type="button" aria-label="编辑相册" onClick={() => setEditing(album)}>
+                          <Pencil />
+                        </button>
+                        <button type="button" aria-label="删除相册" onClick={() => void onDelete(album)}>
+                          <Trash2 />
+                        </button>
+                      </span>
+                    ) : null}
+                  </div>
+                )}
               </div>
-            </section>
-          ))
-        )}
-      </div>
+            );
+          })}
 
-      {viewer ? (
-        <GalleryLightbox
-          photos={viewer.photos}
-          index={viewer.index}
-          onClose={() => setViewer(null)}
-          onIndex={(index) => setViewer((state) => (state ? { ...state, index } : state))}
-        />
-      ) : null}
+          {isOwner && !creating ? (
+            <button type="button" className="album-new" data-reveal="fade" onClick={() => setCreating(true)}>
+              <Plus />
+              <span>新建相册</span>
+            </button>
+          ) : null}
+          {isOwner && creating ? (
+            <div className="album-cell-wrap" style={{ gridColumn: 'span 4' }}>
+              <form className="album-form" onSubmit={(event) => void onCreate(event)}>
+                <input name="title" maxLength={60} placeholder="相册名称" required autoFocus />
+                <input name="description" maxLength={200} placeholder="一句话描述（可选）" />
+                <div className="album-form-actions">
+                  <button type="submit">创建</button>
+                  <button type="button" onClick={() => setCreating(false)}>取消</button>
+                </div>
+              </form>
+            </div>
+          ) : null}
+        </div>
+      </div>
     </>
   );
 }

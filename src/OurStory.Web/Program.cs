@@ -149,6 +149,10 @@ app.UseStaticFiles(new StaticFileOptions {
         context.Context.Response.Headers.CacheControl = "public, max-age=604800"
 });
 
+// 整站门禁：入口口令没过的访客只能看到 /enter。
+// 必须放在静态资源之后，保证脚本、样式、图片这些工具性请求不被拦。
+app.UseSiteGate();
+
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

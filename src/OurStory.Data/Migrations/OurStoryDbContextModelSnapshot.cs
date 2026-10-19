@@ -180,6 +180,34 @@ namespace OurStory.Data.Migrations
                     b.ToTable("affinity_question_options", (string)null);
                 });
 
+            modelBuilder.Entity("OurStory.Core.Entities.AlbumPhoto", b =>
+                {
+                    b.Property<int>("AlbumId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Caption")
+                        .HasMaxLength(120)
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("UploadedAt")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlbumId", "UploadedAt");
+
+                    b.ToTable("album_photos", (string)null);
+                });
+
             modelBuilder.Entity("OurStory.Core.Entities.Anniversary", b =>
                 {
                     b.Property<int>("Id")
@@ -674,6 +702,39 @@ namespace OurStory.Data.Migrations
                     b.ToTable("notification_settings", (string)null);
                 });
 
+            modelBuilder.Entity("OurStory.Core.Entities.PhotoAlbum", b =>
+                {
+                    b.Property<long>("CreatedAt")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SortOrder")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("UpdatedAt")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SortOrder");
+
+                    b.ToTable("photo_albums", (string)null);
+                });
+
             modelBuilder.Entity("OurStory.Core.Entities.PushDevice", b =>
                 {
                     b.Property<long>("Id")
@@ -966,6 +1027,17 @@ namespace OurStory.Data.Migrations
                     b.Navigation("Question");
                 });
 
+            modelBuilder.Entity("OurStory.Core.Entities.AlbumPhoto", b =>
+                {
+                    b.HasOne("OurStory.Core.Entities.PhotoAlbum", "Album")
+                        .WithMany("Photos")
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Album");
+                });
+
             modelBuilder.Entity("OurStory.Core.Entities.Anniversary", b =>
                 {
                     b.HasOne("OurStory.Core.Entities.User", "Author")
@@ -1173,6 +1245,11 @@ namespace OurStory.Data.Migrations
             modelBuilder.Entity("OurStory.Core.Entities.Moment", b =>
                 {
                     b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("OurStory.Core.Entities.PhotoAlbum", b =>
+                {
+                    b.Navigation("Photos");
                 });
 
             modelBuilder.Entity("OurStory.Core.Entities.User", b =>

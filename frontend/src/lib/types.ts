@@ -210,18 +210,30 @@ export interface AnniversaryDetailData {
   next: { id: number; title: string; url: string } | null;
 }
 
-export interface GalleryPhoto {
-  src: string;
-  thumb: string;
-  caption: string | null;
-  momentId: number;
-  momentSlug: string;
-  momentTitle: string;
-  momentDate: string;
-  url: string;
+export interface AlbumCard {
+  id: number;
+  title: string;
+  description: string | null;
+  cover: string | null;
+  photoCount: number;
+  latestUpload: string | null;
 }
 
-export interface GalleryData {
+export interface AlbumPhoto {
+  id: number;
+  url: string;
+  thumb: string;
+  caption: string | null;
+  uploadedAt: string;
+  uploadedOn: string;
+}
+
+export interface AlbumListData {
   total: number;
-  photos: GalleryPhoto[];
+  albums: AlbumCard[];
+}
+
+export interface AlbumDetailData {
+  album: AlbumCard;
+  photos: AlbumPhoto[];
 }

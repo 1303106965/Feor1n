@@ -33,6 +33,13 @@ public class SiteOptions {
     public string VisitorSecret { get; set; } = string.Empty;
 
     /// <summary>
+    /// 获取或设置整站入口口令。
+    /// 访客必须先输入它才能看到任何内容；改完要重启。
+    /// 留空表示关闭门禁，一般不建议。
+    /// </summary>
+    public string AccessCode { get; set; } = "0912";
+
+    /// <summary>
     /// 获取或设置首次启动时自动创建的两个账号
     /// </summary>
     public SeedAccountOptions Seed { get; set; } = new();
