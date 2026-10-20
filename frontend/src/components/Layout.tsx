@@ -110,7 +110,7 @@ export default function Layout() {
             <div className="footer-col">
               <p className="meta">About</p>
               <p className="footer-note">
-                {site.description}。{site.homeSentence}
+                {site.description}
               </p>
             </div>
             <div className="footer-col">

@@ -183,7 +183,7 @@ export default function HomePage() {
             <small>AND COUNTING</small>
           </div>
           <p className="today-sub" data-reveal style={{ '--rd': '120ms' } as CSSProperties}>
-            自 {formatDate(site.loveStartedAt)} 起 · 余生长卷，仍在书写
+            自 {formatDate(site.loveStartedAt)} 起 · 故事有了名字，时间有了归处
           </p>
 
           <div className="today-grid">
