@@ -796,6 +796,12 @@ a {
     order: 0;
   }
 
+  .chapter--reverse .chapter-meta {
+    grid-column: 1;
+    order: 0;
+    writing-mode: horizontal-tb;
+  }
+
   .chapter-figure,
   .chapter--reverse .chapter-figure {
     grid-column: 1;
