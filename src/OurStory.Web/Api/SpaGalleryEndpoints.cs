@@ -275,7 +275,7 @@ public static partial class SpaGalleryEndpoints {
             description = album.Description,
             cover = album.Photos.Count == 0
                 ? null
-                : media.Preview(album.Photos
+                : media.Thumb(album.Photos
                     .OrderByDescending(photo => photo.UploadedAt)
                     .ThenByDescending(photo => photo.Id)
                     .First().Url),
@@ -287,7 +287,7 @@ public static partial class SpaGalleryEndpoints {
     private static object PhotoPayload(AlbumPhoto photo, SiteClock clock, MediaUrls media) => new {
         id = photo.Id,
         url = photo.Url,
-        thumb = media.Preview(photo.Url),
+        thumb = media.Thumb(photo.Url),
         caption = photo.Caption,
         uploadedAt = clock.ToLocal(photo.UploadedAt).ToString("yyyy-MM-dd HH:mm"),
         uploadedOn = clock.ToLocal(photo.UploadedAt).ToString("yyyy-MM-dd")

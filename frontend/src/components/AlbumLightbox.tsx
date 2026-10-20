@@ -84,7 +84,7 @@ export default function AlbumLightbox({ photos, index, onClose, onIndex, onDelet
 
       <div className="lightbox-stage" onClick={(event) => event.stopPropagation()}>
         <div className="album-viewer" key={photo.id}>
-          <img src={photo.url} alt={photo.caption ?? '相册照片'} />
+          <img src={photo.thumb} alt={photo.caption ?? '相册照片'} />
         </div>
         <div className="lightbox-caption">
           {photo.caption ?? '未命名瞬间'}

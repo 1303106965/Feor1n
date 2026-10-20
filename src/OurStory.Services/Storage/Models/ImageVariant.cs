@@ -32,7 +32,14 @@ public sealed record ImageVariant(string Name, int Width, int Height, bool Crop)
     /// </remarks>
     public static readonly ImageVariant Preview = new("preview", 1440, 0, false);
 
-    private static readonly ImageVariant[] All = [Cover, Preview];
+    /// <summary>
+    /// 相册缩略图规格。
+    /// 画廊墙一屏十几张小图，1440px 的预览图纯属浪费流量；
+    /// 480px 足够铺满三列瀑布流，点开大图再加载预览或原图。
+    /// </summary>
+    public static readonly ImageVariant Thumb = new("thumb", 480, 0, false);
+
+    private static readonly ImageVariant[] All = [Cover, Preview, Thumb];
 
     /// <summary>
     /// 根据规格名称获取图片规格定义。

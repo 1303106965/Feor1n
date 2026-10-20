@@ -39,6 +39,16 @@ public sealed class MediaUrls(StoragePaths paths, ActiveConfiguration configurat
     public string Preview(string? url) => For(url, ImageVariant.Preview);
 
     /// <summary>
+    /// 获取相册缩略图规格图片地址。
+    /// </summary>
+    /// <param name="url">原始图片地址，可以为空</param>
+    /// <returns>
+    /// 缩略图规格地址；
+    /// 不支持生成派生图片时返回原始地址。
+    /// </returns>
+    public string Thumb(string? url) => For(url, ImageVariant.Thumb);
+
+    /// <summary>
     /// 根据指定规格生成图片地址。
     /// </summary>
     /// <param name="url">原始图片地址，可以为空</param>
