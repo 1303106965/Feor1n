@@ -8,7 +8,7 @@
     <span class="auth-mark">@Icon("lock")</span>
     <p class="auth-eyebrow">PRIVATE ACCESS</p>
     <h1>站点入口</h1>
-    <p class="auth-hint">这是一座只属于两个人的小站，<br>请输入入口口令继续。</p>
+    <p class="auth-hint">这是一座只属于两个人的小站，<br>留下名字和口令，继续。</p>
 
     @if (!string.IsNullOrEmpty(Model.Error)) {
         <div class="auth-error">@Icon("circle-alert")@Model.Error</div>
@@ -17,9 +17,53 @@
     <form method="post">
         <input type="hidden" asp-for="ReturnUrl" />
         <label>
+            <span>你是谁</span>
+            <input type="text" asp-for="Name" autocomplete="off" autofocus required placeholder="输入你们其中一人的名字" />
+        </label>
+        <div class="identity-chips">
+            <button type="button" data-name="@Model.BoyName">@Model.BoyName</button>
+            <button type="button" data-name="@Model.GirlName">@Model.GirlName</button>
+        </div>
+        <label>
             <span>口令</span>
-            <input type="password" asp-for="Code" autocomplete="off" autofocus required />
+            <input type="password" asp-for="Code" autocomplete="off" required />
         </label>
         <button type="submit">进入</button>
     </form>
 </main>
+<script>
+    document.querySelectorAll('.identity-chips [data-name]').forEach(function (chip) {
+        chip.addEventListener('click', function () {
+            var input = document.querySelector('input[name="Name"]');
+            if (input) {
+                input.value = chip.dataset.name;
+                document.querySelector('input[name="Code"]')?.focus();
+            }
+        });
+    });
+</script>
+<style>
+    .identity-chips {
+        display: flex;
+        gap: 8px;
+        margin: -6px 0 14px;
+    }
+
+    .identity-chips button {
+        flex: 1;
+        padding: 9px 0;
+        border: 1px solid var(--line-strong);
+        border-radius: 10px;
+        background: transparent;
+        color: var(--muted);
+        font: 12px var(--sans);
+        cursor: pointer;
+        transition: color .18s, border-color .18s, background-color .18s;
+    }
+
+    .identity-chips button:hover {
+        color: var(--accent-deep);
+        border-color: var(--accent);
+        background: var(--accent-soft);
+    }
+</style>
